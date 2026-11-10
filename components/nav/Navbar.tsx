@@ -2,9 +2,12 @@
 
 import Link from 'next/link';
 import { useState, useEffect, useRef } from 'react';
+import { useAuth } from '@/context/AuthContext';
+import { LogOut, LogIn } from 'lucide-react';
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
+  const { user, logout, openAuthModal } = useAuth();
   const drawerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -56,6 +59,33 @@ export default function Navbar() {
               ))}
             </div>
 
+            <div className="hidden md:flex items-center">
+              {user ? (
+                <div className="flex items-center space-x-4">
+                  <span className="text-slate-300 text-sm">
+                    Welcome, {user.username}
+                  </span>
+                  <button
+                    onClick={logout}
+                    aria-label="Logout"
+                    className="flex items-center gap-2 text-slate-300 hover:text-white hover:text-accent-cyan transition-colors focus-visible:ring-2 focus-visible:ring-accent-cyan focus-visible:outline-none rounded-md px-2 py-1"
+                  >
+                    <LogOut className="w-4 h-4" />
+                    <span>Logout</span>
+                  </button>
+                </div>
+              ) : (
+                <button
+                  onClick={openAuthModal}
+                  aria-label="Login"
+                  className="flex items-center gap-2 text-slate-300 hover:text-white hover:text-accent-cyan transition-colors focus-visible:ring-2 focus-visible:ring-accent-cyan focus-visible:outline-none rounded-md px-2 py-1"
+                >
+                  <LogIn className="w-4 h-4" />
+                  <span>Login</span>
+                </button>
+              )}
+            </div>
+
             <div className="md:hidden">
               <button
                 onClick={() => setIsOpen(true)}
@@ -77,15 +107,6 @@ export default function Navbar() {
                   />
                 </svg>
               </button>
-            </div>
-
-            <div className="hidden md:flex items-center">
-              <Link
-                href="/login"
-                className="text-slate-300 hover:text-white hover:text-accent-cyan transition-colors focus-visible:ring-2 focus-visible:ring-accent-cyan focus-visible:outline-none rounded-md px-2 py-1"
-              >
-                Login
-              </Link>
             </div>
           </div>
         </div>
@@ -143,13 +164,34 @@ export default function Navbar() {
                     {link.label}
                   </Link>
                 ))}
-                <Link
-                  href="/login"
-                  onClick={() => setIsOpen(false)}
-                  className="text-slate-300 hover:text-white hover:text-accent-cyan transition-colors focus-visible:ring-2 focus-visible:ring-accent-cyan focus-visible:outline-none rounded-md px-2 py-2 text-lg"
-                >
-                  Login
-                </Link>
+                {user ? (
+                  <>
+                    <div className="pt-2 border-t border-slate-700 mt-2">
+                      <span className="text-slate-400 text-sm block px-2 py-1">
+                        Welcome, {user.username}
+                      </span>
+                      <button
+                        onClick={() => {
+                          logout();
+                          setIsOpen(false);
+                        }}
+                        className="text-slate-300 hover:text-white hover:text-accent-cyan transition-colors focus-visible:ring-2 focus-visible:ring-accent-cyan focus-visible:outline-none rounded-md px-2 py-2 text-lg w-full text-left"
+                      >
+                        Logout
+                      </button>
+                    </div>
+                  </>
+                ) : (
+                  <button
+                    onClick={() => {
+                      openAuthModal();
+                      setIsOpen(false);
+                    }}
+                    className="text-slate-300 hover:text-white hover:text-accent-cyan transition-colors focus-visible:ring-2 focus-visible:ring-accent-cyan focus-visible:outline-none rounded-md px-2 py-2 text-lg mt-4"
+                  >
+                    Login
+                  </button>
+                )}
               </nav>
             </div>
           </div>

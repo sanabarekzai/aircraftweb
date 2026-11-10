@@ -1,0 +1,412 @@
+[
+  {
+    "slug": "phantom-3500",
+    "name": "Phantom 3500",
+    "isConcept": true,
+    "releaseYear": null,
+    "category": "EXPERIMENTAL",
+    "era": "MODERN",
+    "topSpeedKmh": 2550,
+    "serviceCeilingFt": 51000,
+    "maxRangeNm": 4200,
+    "wingspanM": 18.5,
+    "maxTakeoffWeightLbs": 45000,
+    "stallSpeedKts": 110,
+    "liftToDragRatio": 14.2,
+    "engineType": "TBD",
+    "description": "Phantom 3500 is a fictional concept aircraft.",
+    "flightControlsDescription": "Advanced fly-by-wire system with experimental control surfaces.",
+    "youtubeId": "TODO_VERIFY_phantom_3500",
+    "schematicUrl": "TODO_VERIFY_phantom_3500_schematic",
+    "tags": ["Concept", "Supersonic", "Experimental"],
+    "images": [
+      {
+        "url": "TODO_VERIFY_phantom_3500_1",
+        "caption": "Phantom 3500 concept render",
+        "source": "Phantom Aero",
+        "license": "CC-BY-SA"
+      },
+      {
+        "url": "TODO_VERIFY_phantom_3500_2",
+        "caption": "Phantom 3500 side view",
+        "source": "Phantom Aero",
+        "license": "CC-BY-SA"
+      },
+      {
+        "url": "TODO_VERIFY_phantom_3500_3",
+        "caption": "Phantom 3500 cockpit",
+        "source": "Phantom Aero",
+        "license": "CC-BY-SA"
+      }
+    ]
+  },
+  {
+    "slug": "concorde-sst",
+    "name": "Concorde SST",
+    "isConcept": false,
+    "releaseYear": 1969,
+    "category": "SUPERSONIC",
+    "era": "JET_AGE",
+    "topSpeedKmh": 2179,
+    "serviceCeilingFt": 60000,
+    "maxRangeNm": 3900,
+    "wingspanM": 25.6,
+    "maxTakeoffWeightLbs": 408000,
+    "stallSpeedKts": 160,
+    "liftToDragRatio": 7.5,
+    "engineType": "Turbojet (Rolls-Royce/Snecma Olympus 593)",
+    "description": "The Concorde was a supersonic passenger airliner that operated from 1976 to 2003. It was one of only two supersonic transports to have been operated commercially.",
+    "flightControlsDescription": "Conventional flight controls with fly-by-wire enhancements for supersonic stability.",
+    "youtubeId": "TODO_VERIFY_concorde_sst",
+    "schematicUrl": "TODO_VERIFY_concorde_sst_schematic",
+    "tags": ["Supersonic", "Airliner"],
+    "images": [
+      {
+        "url": "TODO_VERIFY_concorde_1",
+        "caption": "Concorde in flight",
+        "source": "British Airways",
+        "license": "Public Domain"
+      },
+      {
+        "url": "TODO_VERIFY_concorde_2",
+        "caption": "Concorde landing",
+        "source": "Air France",
+        "license": "Public Domain"
+      },
+      {
+        "url": "TODO_VERIFY_concorde_3",
+        "caption": "Concorde cockpit",
+        "source": "Wikipedia",
+        "license": "CC-BY-SA"
+      }
+    ]
+  },
+  {
+    "slug": "sr-71-blackbird",
+    "name": "SR-71 Blackbird",
+    "isConcept": false,
+    "releaseYear": 1964,
+    "category": "MILITARY",
+    "era": "JET_AGE",
+    "topSpeedKmh": 3540,
+    "serviceCeilingFt": 85000,
+    "maxRangeNm": 2900,
+    "wingspanM": 16.9,
+    "maxTakeoffWeightLbs": 140000,
+    "stallSpeedKts": 152,
+    "liftToDragRatio": 6.5,
+    "engineType": "Turbojet (Pratt & Whitney J58)",
+    "description": "The SR-71 Blackbird is a long-range, high-altitude strategic reconnaissance aircraft. It was the world's fastest and highest-flying operational manned aircraft.",
+    "flightControlsDescription": "Advanced reconnaissance systems with automated flight controls for high-altitude operations.",
+    "youtubeId": "TODO_VERIFY_sr71_blackbird",
+    "schematicUrl": "TODO_VERIFY_sr71_blackbird_schematic",
+    "tags": ["Military", "Supersonic", "Reconnaissance"],
+    "images": [
+      {
+        "url": "TODO_VERIFY_sr71_1",
+        "caption": "SR-71 Blackbird in flight",
+        "source": "USAF",
+        "license": "Public Domain"
+      },
+      {
+        "url": "TODO_VERIFY_sr71_2",
+        "caption": "SR-71 Blackbird on ground",
+        "source": "NASA",
+        "license": "Public Domain"
+      },
+      {
+        "url": "TODO_VERIFY_sr71_3",
+        "caption": "SR-71 Blackbird cockpit",
+        "source": "USAF",
+        "license": "Public Domain"
+      }
+    ]
+  },
+  {
+    "slug": "cessna-172-skyhawk",
+    "name": "Cessna 172 Skyhawk",
+    "isConcept": false,
+    "releaseYear": 1955,
+    "category": "GENERAL_AVIATION",
+    "era": "JET_AGE",
+    "topSpeedKmh": 230,
+    "serviceCeilingFt": 14000,
+    "maxRangeNm": 640,
+    "wingspanM": 11.0,
+    "maxTakeoffWeightLbs": 2550,
+    "stallSpeedKts": 47,
+    "liftToDragRatio": 9.0,
+    "engineType": "Piston (Lycoming O-320)",
+    "description": "The Cessna 172 Skyhawk is a four-seat, single-engine, high-wing fixed-wing aircraft. It is the most produced aircraft in history.",
+    "flightControlsDescription": "Conventional three-axis control system with mechanical linkage.",
+    "youtubeId": "TODO_VERIFY_cessna_172",
+    "schematicUrl": "TODO_VERIFY_cessna_172_schematic",
+    "tags": ["Trainer"],
+    "images": [
+      {
+        "url": "TODO_VERIFY_cessna_1",
+        "caption": "Cessna 172 Skyhawk in flight",
+        "source": "Cessna",
+        "license": "Public Domain"
+      },
+      {
+        "url": "TODO_VERIFY_cessna_2",
+        "caption": "Cessna 172 Skyhawk on ground",
+        "source": "Wikipedia",
+        "license": "CC-BY-SA"
+      },
+      {
+        "url": "TODO_VERIFY_cessna_3",
+        "caption": "Cessna 172 Skyhawk cockpit",
+        "source": "Wikipedia",
+        "license": "CC-BY-SA"
+      }
+    ]
+  },
+  {
+    "slug": "boeing-747-8-intercontinental",
+    "name": "Boeing 747-8 Intercontinental",
+    "isConcept": false,
+    "releaseYear": 2010,
+    "category": "COMMERCIAL_AIRLINER",
+    "era": "MODERN",
+    "topSpeedKmh": 988,
+    "serviceCeilingFt": 43100,
+    "maxRangeNm": 8000,
+    "wingspanM": 68.4,
+    "maxTakeoffWeightLbs": 987000,
+    "stallSpeedKts": 145,
+    "liftToDragRatio": 17.5,
+    "engineType": "Turbofan (General Electric GEnx-2B67)",
+    "description": "The Boeing 747-8 Intercontinental is the passenger version of the 747-8. It is the largest passenger airliner in the world.",
+    "flightControlsDescription": "Fly-by-wire system with conventional backup controls.",
+    "youtubeId": "TODO_VERIFY_boeing_747_8",
+    "schematicUrl": "TODO_VERIFY_boeing_747_8_schematic",
+    "tags": ["Airliner"],
+    "images": [
+      {
+        "url": "TODO_VERIFY_747_1",
+        "caption": "Boeing 747-8 in flight",
+        "source": "Boeing",
+        "license": "Public Domain"
+      },
+      {
+        "url": "TODO_VERIFY_747_2",
+        "caption": "Boeing 747-8 on ground",
+        "source": "Boeing",
+        "license": "Public Domain"
+      },
+      {
+        "url": "TODO_VERIFY_747_3",
+        "caption": "Boeing 747-8 cockpit",
+        "source": "Boeing",
+        "license": "Public Domain"
+      }
+    ]
+  },
+  {
+    "slug": "f-22-raptor",
+    "name": "F-22 Raptor",
+    "isConcept": false,
+    "releaseYear": 1997,
+    "category": "MILITARY",
+    "era": "MODERN",
+    "topSpeedKmh": 2414,
+    "serviceCeilingFt": 65000,
+    "maxRangeNm": 1600,
+    "wingspanM": 13.6,
+    "maxTakeoffWeightLbs": 83500,
+    "stallSpeedKts": 120,
+    "liftToDragRatio": 10.0,
+    "engineType": "Turbofan (Pratt & Whitney F119-PW-100)",
+    "description": "The F-22 Raptor is a fifth-generation, single-seat, twin-engine, all-weather stealth tactical fighter aircraft.",
+    "flightControlsDescription": "Advanced fly-by-wire with thrust vectoring for supermaneuverability.",
+    "youtubeId": "TODO_VERIFY_f22_raptor",
+    "schematicUrl": "TODO_VERIFY_f22_raptor_schematic",
+    "tags": ["Military", "Fighter", "Supersonic"],
+    "images": [
+      {
+        "url": "TODO_VERIFY_f22_1",
+        "caption": "F-22 Raptor in flight",
+        "source": "USAF",
+        "license": "Public Domain"
+      },
+      {
+        "url": "TODO_VERIFY_f22_2",
+        "caption": "F-22 Raptor on ground",
+        "source": "USAF",
+        "license": "Public Domain"
+      },
+      {
+        "url": "TODO_VERIFY_f22_3",
+        "caption": "F-22 Raptor cockpit",
+        "source": "USAF",
+        "license": "Public Domain"
+      }
+    ]
+  },
+  {
+    "slug": "airbus-a350-1000",
+    "name": "Airbus A350-1000",
+    "isConcept": false,
+    "releaseYear": 2017,
+    "category": "COMMERCIAL_AIRLINER",
+    "era": "MODERN",
+    "topSpeedKmh": 945,
+    "serviceCeilingFt": 41400,
+    "maxRangeNm": 8700,
+    "wingspanM": 64.75,
+    "maxTakeoffWeightLbs": 703000,
+    "stallSpeedKts": 138,
+    "liftToDragRatio": 18.1,
+    "engineType": "Turbofan (Rolls-Royce Trent XWB-97)",
+    "description": "The Airbus A350-1000 is a long-range, wide-body twin-engine jet airliner. It is the largest member of the Airbus A350 family.",
+    "flightControlsDescription": "Fly-by-wire system with side-stick controllers.",
+    "youtubeId": "TODO_VERIFY_airbus_a350_1000",
+    "schematicUrl": "TODO_VERIFY_airbus_a350_1000_schematic",
+    "tags": ["Airliner"],
+    "images": [
+      {
+        "url": "TODO_VERIFY_a350_1",
+        "caption": "Airbus A350-1000 in flight",
+        "source": "Airbus",
+        "license": "Public Domain"
+      },
+      {
+        "url": "TODO_VERIFY_a350_2",
+        "caption": "Airbus A350-1000 on ground",
+        "source": "Airbus",
+        "license": "Public Domain"
+      },
+      {
+        "url": "TODO_VERIFY_a350_3",
+        "caption": "Airbus A350-1000 cockpit",
+        "source": "Airbus",
+        "license": "Public Domain"
+      }
+    ]
+  },
+  {
+    "slug": "supermarine-spitfire-mk-ix",
+    "name": "Supermarine Spitfire Mk IX",
+    "isConcept": false,
+    "releaseYear": 1942,
+    "category": "MILITARY",
+    "era": "WWII",
+    "topSpeedKmh": 650,
+    "serviceCeilingFt": 43000,
+    "maxRangeNm": 415,
+    "wingspanM": 11.2,
+    "maxTakeoffWeightLbs": 7500,
+    "stallSpeedKts": 63,
+    "liftToDragRatio": 13.0,
+    "engineType": "Piston (Rolls-Royce Merlin 61)",
+    "description": "The Supermarine Spitfire is a British single-seat fighter aircraft used by the Royal Air Force and other Allied countries before, during, and after World War II.",
+    "flightControlsDescription": "Mechanical flight controls with manual operation.",
+    "youtubeId": "TODO_VERIFY_spitfire_mk_ix",
+    "schematicUrl": "TODO_VERIFY_spitfire_mk_ix_schematic",
+    "tags": ["Military", "Historical", "Fighter"],
+    "images": [
+      {
+        "url": "TODO_VERIFY_spitfire_1",
+        "caption": "Supermarine Spitfire Mk IX in flight",
+        "source": "RAF",
+        "license": "Public Domain"
+      },
+      {
+        "url": "TODO_VERIFY_spitfire_2",
+        "caption": "Supermarine Spitfire Mk IX on ground",
+        "source": "Wikipedia",
+        "license": "Public Domain"
+      },
+      {
+        "url": "TODO_VERIFY_spitfire_3",
+        "caption": "Supermarine Spitfire Mk IX cockpit",
+        "source": "Wikipedia",
+        "license": "Public Domain"
+      }
+    ]
+  },
+  {
+    "slug": "piper-j-3-cub",
+    "name": "Piper J-3 Cub",
+    "isConcept": false,
+    "releaseYear": 1938,
+    "category": "GENERAL_AVIATION",
+    "era": "PIONEER",
+    "topSpeedKmh": 140,
+    "serviceCeilingFt": 11500,
+    "maxRangeNm": 190,
+    "wingspanM": 10.7,
+    "maxTakeoffWeightLbs": 1220,
+    "stallSpeedKts": 33,
+    "liftToDragRatio": 8.0,
+    "engineType": "Piston (Continental A-65)",
+    "description": "The Piper J-3 Cub is a small, simple, light aircraft that was built between 1937 and 1947. It was one of the most produced light aircraft in history.",
+    "flightControlsDescription": "Simple mechanical flight controls for training.",
+    "youtubeId": "TODO_VERIFY_piper_j3_cub",
+    "schematicUrl": "TODO_VERIFY_piper_j3_cub_schematic",
+    "tags": ["Historical", "Trainer"],
+    "images": [
+      {
+        "url": "TODO_VERIFY_piper_1",
+        "caption": "Piper J-3 Cub in flight",
+        "source": "Piper",
+        "license": "Public Domain"
+      },
+      {
+        "url": "TODO_VERIFY_piper_2",
+        "caption": "Piper J-3 Cub on ground",
+        "source": "Wikipedia",
+        "license": "Public Domain"
+      },
+      {
+        "url": "TODO_VERIFY_piper_3",
+        "caption": "Piper J-3 Cub cockpit",
+        "source": "Wikipedia",
+        "license": "Public Domain"
+      }
+    ]
+  },
+  {
+    "slug": "bell-x-1",
+    "name": "Bell X-1",
+    "isConcept": false,
+    "releaseYear": 1946,
+    "category": "EXPERIMENTAL",
+    "era": "JET_AGE",
+    "topSpeedKmh": 1540,
+    "serviceCeilingFt": 71900,
+    "maxRangeNm": 100,
+    "wingspanM": 8.5,
+    "maxTakeoffWeightLbs": 12250,
+    "stallSpeedKts": 140,
+    "liftToDragRatio": 5.2,
+    "engineType": "Rocket (Reaction Motors XLR11)",
+    "description": "The Bell X-1 was the first aircraft to break the sound barrier in level flight. First flight 1946; broke sound barrier (Mach 1.06) on 1947-10-14.",
+    "flightControlsDescription": "Experimental control system for high-speed research.",
+    "youtubeId": "TODO_VERIFY_bell_x1",
+    "schematicUrl": "TODO_VERIFY_bell_x1_schematic",
+    "tags": ["Experimental", "Rocket-Powered", "Supersonic"],
+    "images": [
+      {
+        "url": "TODO_VERIFY_bell_x1_1",
+        "caption": "Bell X-1 in flight",
+        "source": "NASA",
+        "license": "Public Domain"
+      },
+      {
+        "url": "TODO_VERIFY_bell_x1_2",
+        "caption": "Bell X-1 on ground",
+        "source": "NASA",
+        "license": "Public Domain"
+      },
+      {
+        "url": "TODO_VERIFY_bell_x1_3",
+        "caption": "Bell X-1 cockpit",
+        "source": "NASA",
+        "license": "Public Domain"
+      }
+    ]
+  }
+]

@@ -1,13 +1,11 @@
 'use client';
 
-import { Suspense, useState, useEffect, useCallback, useMemo } from 'react';
-import { useRouter, usePathname } from 'next/navigation';
+import { Suspense, useState, useEffect } from 'react';
 import { FleetFilters } from '@/components/fleet/FleetFilters';
 import { AircraftCard } from '@/components/fleet/AircraftCard';
 import { useAuth } from '@/context/AuthContext';
 import { useToast } from '@/lib/toast';
 import Link from 'next/link';
-import { Search } from 'lucide-react';
 
 interface AircraftImage {
   url: string;
@@ -32,8 +30,6 @@ interface AircraftResponse {
 }
 
 function FleetContent() {
-  const router = useRouter();
-  const pathname = usePathname();
   const { user } = useAuth();
   const { showToast } = useToast();
 

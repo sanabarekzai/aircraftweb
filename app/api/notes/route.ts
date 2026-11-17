@@ -1,9 +1,16 @@
 import { NextResponse } from 'next/server';
-import { getIronSession } from 'iron-session';
 import { cookies } from 'next/headers';
 import { sessionOptions, SessionData } from '@/lib/session';
+import { getIronSession } from 'iron-session';
 import { prisma } from '@/lib/prisma';
-import { z } from 'zod';
+import { z, ZodError } from 'zod';
+import {
+  getSessionOr401,
+  checkAircraftExists,
+  internalError,
+  successResponse,
+  validationError,
+} from '@/lib/api-helpers';
 
 const postSchema = z.object({
   aircraftId: z.string().uuid('Invalid aircraft ID'),
@@ -13,23 +20,18 @@ const postSchema = z.object({
 // GET /api/notes?aircraftId=...
 export async function GET(request: Request) {
   try {
-    const cookieStore = await cookies();
-    const session = await getIronSession<SessionData>(cookieStore, sessionOptions);
-
-    if (!session.user) {
-      return NextResponse.json(
-        {
-          error: {
-            code: 'UNAUTHORIZED',
-            message: 'Authentication required',
-          },
-        },
-        { status: 401 }
-      );
-    }
-
+    const sessionOr401 = await getSessionOr401();
+    if (sessionOr401 instanceof NextResponse) return sessionOr401;
+    
+    const session = sessionOr401 as { user: SessionData['user'] };
     const { searchParams } = new URL(request.url);
     const aircraftId = searchParams.get('aircraftId');
+
+    // If aircraftId is provided, verify it exists
+    if (aircraftId) {
+      const aircraftCheck = await checkAircraftExists(aircraftId);
+      if (aircraftCheck instanceof NextResponse) return aircraftCheck;
+    }
 
     const notes = await prisma.personalNote.findMany({
       where: {
@@ -44,66 +46,31 @@ export async function GET(request: Request) {
       orderBy: { createdAt: 'desc' },
     });
 
-    return NextResponse.json(
-      {
-        notes: notes.map((n) => ({
-          ...n,
-          aircraft: n.aircraft,
-        })),
-      },
-      { status: 200 }
-    );
+    return successResponse({
+      notes: notes.map((n) => ({
+        ...n,
+        aircraft: n.aircraft,
+      })),
+    });
   } catch (error) {
     console.error('Get notes error:', error);
-    return NextResponse.json(
-      {
-        error: {
-          code: 'INTERNAL_ERROR',
-          message: 'Failed to get notes',
-        },
-      },
-      { status: 500 }
-    );
+    return internalError('Failed to get notes');
   }
 }
 
 // POST /api/notes
 export async function POST(request: Request) {
   try {
-    const cookieStore = await cookies();
-    const session = await getIronSession<SessionData>(cookieStore, sessionOptions);
-
-    if (!session.user) {
-      return NextResponse.json(
-        {
-          error: {
-            code: 'UNAUTHORIZED',
-            message: 'Authentication required',
-          },
-        },
-        { status: 401 }
-      );
-    }
-
+    const sessionOr401 = await getSessionOr401();
+    if (sessionOr401 instanceof NextResponse) return sessionOr401;
+    
+    const session = sessionOr401 as { user: SessionData['user'] };
     const body = await request.json();
     const { aircraftId, content } = postSchema.parse(body);
 
     // Check if aircraft exists
-    const aircraft = await prisma.aircraft.findUnique({
-      where: { id: aircraftId },
-    });
-
-    if (!aircraft) {
-      return NextResponse.json(
-        {
-          error: {
-            code: 'NOT_FOUND',
-            message: 'Aircraft not found',
-          },
-        },
-        { status: 404 }
-      );
-    }
+    const aircraftCheck = await checkAircraftExists(aircraftId);
+    if (aircraftCheck instanceof NextResponse) return aircraftCheck;
 
     const note = await prisma.personalNote.create({
       data: {
@@ -118,38 +85,21 @@ export async function POST(request: Request) {
       },
     });
 
-    return NextResponse.json(
+    return successResponse(
       {
         note: {
           ...note,
           aircraft: note.aircraft,
         },
       },
-      { status: 201 }
+      201
     );
   } catch (error) {
-    if (error instanceof z.ZodError) {
-      return NextResponse.json(
-        {
-          error: {
-            code: 'INVALID_INPUT',
-            message: 'Validation failed',
-            fieldErrors: error.flatten().fieldErrors,
-          },
-        },
-        { status: 400 }
-      );
+    if (error instanceof ZodError) {
+      return validationError(error.flatten().fieldErrors);
     }
 
     console.error('Create note error:', error);
-    return NextResponse.json(
-      {
-        error: {
-          code: 'INTERNAL_ERROR',
-          message: 'Failed to create note',
-        },
-      },
-      { status: 500 }
-    );
+    return internalError('Failed to create note');
   }
 }

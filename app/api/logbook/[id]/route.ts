@@ -1,9 +1,18 @@
 import { NextResponse } from 'next/server';
-import { getIronSession } from 'iron-session';
 import { cookies } from 'next/headers';
 import { sessionOptions, SessionData } from '@/lib/session';
+import { getIronSession } from 'iron-session';
 import { prisma } from '@/lib/prisma';
-import { z } from 'zod';
+import { z, ZodError } from 'zod';
+import {
+  getSessionOr401,
+  checkAircraftExists,
+  internalError,
+  successResponse,
+  validationError,
+  notFoundResponse,
+  verifyOwnership,
+} from '@/lib/api-helpers';
 
 const putSchema = z.object({
   aircraftId: z.string().uuid('Invalid aircraft ID'),
@@ -18,21 +27,10 @@ export async function PUT(
   { params }: { params: Promise<{ id: string }> }
 ) {
   try {
-    const cookieStore = await cookies();
-    const session = await getIronSession<SessionData>(cookieStore, sessionOptions);
-
-    if (!session.user) {
-      return NextResponse.json(
-        {
-          error: {
-            code: 'UNAUTHORIZED',
-            message: 'Authentication required',
-          },
-        },
-        { status: 401 }
-      );
-    }
-
+    const sessionOr401 = await getSessionOr401();
+    if (sessionOr401 instanceof NextResponse) return sessionOr401;
+    
+    const session = sessionOr401 as { user: SessionData['user'] };
     const { id } = await params;
     const body = await request.json();
     const { aircraftId, date, durationHours, notes } = putSchema.parse(body);
@@ -43,46 +41,17 @@ export async function PUT(
     });
 
     if (!flightLog) {
-      return NextResponse.json(
-        {
-          error: {
-            code: 'NOT_FOUND',
-            message: 'Flight log not found',
-          },
-        },
-        { status: 404 }
-      );
+      return notFoundResponse('Flight log');
     }
 
     // Verify ownership
-    if (flightLog.userId !== session.user.id) {
-      return NextResponse.json(
-        {
-          error: {
-            code: 'NOT_FOUND',
-            message: 'Flight log not found',
-          },
-        },
-        { status: 404 }
-      );
+    if (!verifyOwnership(flightLog, session.user.id)) {
+      return notFoundResponse('Flight log');
     }
 
     // Check if aircraft exists
-    const aircraft = await prisma.aircraft.findUnique({
-      where: { id: aircraftId },
-    });
-
-    if (!aircraft) {
-      return NextResponse.json(
-        {
-          error: {
-            code: 'NOT_FOUND',
-            message: 'Aircraft not found',
-          },
-        },
-        { status: 404 }
-      );
-    }
+    const aircraftCheck = await checkAircraftExists(aircraftId);
+    if (aircraftCheck instanceof NextResponse) return aircraftCheck;
 
     const updatedFlightLog = await prisma.flightLog.update({
       where: { id },
@@ -99,39 +68,19 @@ export async function PUT(
       },
     });
 
-    return NextResponse.json(
-      {
-        flightLog: {
-          ...updatedFlightLog,
-          aircraft: updatedFlightLog.aircraft,
-        },
+    return successResponse({
+      flightLog: {
+        ...updatedFlightLog,
+        aircraft: updatedFlightLog.aircraft,
       },
-      { status: 200 }
-    );
+    });
   } catch (error) {
-    if (error instanceof z.ZodError) {
-      return NextResponse.json(
-        {
-          error: {
-            code: 'INVALID_INPUT',
-            message: 'Validation failed',
-            fieldErrors: error.flatten().fieldErrors,
-          },
-        },
-        { status: 400 }
-      );
+    if (error instanceof ZodError) {
+      return validationError(error.flatten().fieldErrors);
     }
 
     console.error('Update flight log error:', error);
-    return NextResponse.json(
-      {
-        error: {
-          code: 'INTERNAL_ERROR',
-          message: 'Failed to update flight log',
-        },
-      },
-      { status: 500 }
-    );
+    return internalError('Failed to update flight log');
   }
 }
 
@@ -141,21 +90,10 @@ export async function DELETE(
   { params }: { params: Promise<{ id: string }> }
 ) {
   try {
-    const cookieStore = await cookies();
-    const session = await getIronSession<SessionData>(cookieStore, sessionOptions);
-
-    if (!session.user) {
-      return NextResponse.json(
-        {
-          error: {
-            code: 'UNAUTHORIZED',
-            message: 'Authentication required',
-          },
-        },
-        { status: 401 }
-      );
-    }
-
+    const sessionOr401 = await getSessionOr401();
+    if (sessionOr401 instanceof NextResponse) return sessionOr401;
+    
+    const session = sessionOr401 as { user: SessionData['user'] };
     const { id } = await params;
 
     // Find the flight log and verify ownership
@@ -164,48 +102,21 @@ export async function DELETE(
     });
 
     if (!flightLog) {
-      return NextResponse.json(
-        {
-          error: {
-            code: 'NOT_FOUND',
-            message: 'Flight log not found',
-          },
-        },
-        { status: 404 }
-      );
+      return notFoundResponse('Flight log');
     }
 
     // Verify ownership - if not owner, return 404
-    if (flightLog.userId !== session.user.id) {
-      return NextResponse.json(
-        {
-          error: {
-            code: 'NOT_FOUND',
-            message: 'Flight log not found',
-          },
-        },
-        { status: 404 }
-      );
+    if (!verifyOwnership(flightLog, session.user.id)) {
+      return notFoundResponse('Flight log');
     }
 
     await prisma.flightLog.delete({
       where: { id },
     });
 
-    return NextResponse.json(
-      { success: true },
-      { status: 200 }
-    );
+    return successResponse({ success: true });
   } catch (error) {
     console.error('Delete flight log error:', error);
-    return NextResponse.json(
-      {
-        error: {
-          code: 'INTERNAL_ERROR',
-          message: 'Failed to delete flight log',
-        },
-      },
-      { status: 500 }
-    );
+    return internalError('Failed to delete flight log');
   }
 }

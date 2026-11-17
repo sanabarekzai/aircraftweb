@@ -1,9 +1,17 @@
 import { NextResponse } from 'next/server';
-import { getIronSession } from 'iron-session';
 import { cookies } from 'next/headers';
 import { sessionOptions, SessionData } from '@/lib/session';
+import { getIronSession } from 'iron-session';
 import { prisma } from '@/lib/prisma';
-import { z } from 'zod';
+import { z, ZodError } from 'zod';
+import {
+  getSessionOr401,
+  internalError,
+  successResponse,
+  validationError,
+  notFoundResponse,
+  verifyOwnership,
+} from '@/lib/api-helpers';
 
 const putSchema = z.object({
   content: z.string().min(1, 'Content is required'),
@@ -15,21 +23,10 @@ export async function PUT(
   { params }: { params: Promise<{ id: string }> }
 ) {
   try {
-    const cookieStore = await cookies();
-    const session = await getIronSession<SessionData>(cookieStore, sessionOptions);
-
-    if (!session.user) {
-      return NextResponse.json(
-        {
-          error: {
-            code: 'UNAUTHORIZED',
-            message: 'Authentication required',
-          },
-        },
-        { status: 401 }
-      );
-    }
-
+    const sessionOr401 = await getSessionOr401();
+    if (sessionOr401 instanceof NextResponse) return sessionOr401;
+    
+    const session = sessionOr401 as { user: SessionData['user'] };
     const { id } = await params;
     const body = await request.json();
     const { content } = putSchema.parse(body);
@@ -40,28 +37,12 @@ export async function PUT(
     });
 
     if (!note) {
-      return NextResponse.json(
-        {
-          error: {
-            code: 'NOT_FOUND',
-            message: 'Note not found',
-          },
-        },
-        { status: 404 }
-      );
+      return notFoundResponse('Note');
     }
 
     // Verify ownership
-    if (note.userId !== session.user.id) {
-      return NextResponse.json(
-        {
-          error: {
-            code: 'NOT_FOUND',
-            message: 'Note not found',
-          },
-        },
-        { status: 404 }
-      );
+    if (!verifyOwnership(note, session.user.id)) {
+      return notFoundResponse('Note');
     }
 
     const updatedNote = await prisma.personalNote.update({
@@ -77,39 +58,19 @@ export async function PUT(
       },
     });
 
-    return NextResponse.json(
-      {
-        note: {
-          ...updatedNote,
-          aircraft: updatedNote.aircraft,
-        },
+    return successResponse({
+      note: {
+        ...updatedNote,
+        aircraft: updatedNote.aircraft,
       },
-      { status: 200 }
-    );
+    });
   } catch (error) {
-    if (error instanceof z.ZodError) {
-      return NextResponse.json(
-        {
-          error: {
-            code: 'INVALID_INPUT',
-            message: 'Validation failed',
-            fieldErrors: error.flatten().fieldErrors,
-          },
-        },
-        { status: 400 }
-      );
+    if (error instanceof ZodError) {
+      return validationError(error.flatten().fieldErrors);
     }
 
     console.error('Update note error:', error);
-    return NextResponse.json(
-      {
-        error: {
-          code: 'INTERNAL_ERROR',
-          message: 'Failed to update note',
-        },
-      },
-      { status: 500 }
-    );
+    return internalError('Failed to update note');
   }
 }
 
@@ -119,21 +80,10 @@ export async function DELETE(
   { params }: { params: Promise<{ id: string }> }
 ) {
   try {
-    const cookieStore = await cookies();
-    const session = await getIronSession<SessionData>(cookieStore, sessionOptions);
-
-    if (!session.user) {
-      return NextResponse.json(
-        {
-          error: {
-            code: 'UNAUTHORIZED',
-            message: 'Authentication required',
-          },
-        },
-        { status: 401 }
-      );
-    }
-
+    const sessionOr401 = await getSessionOr401();
+    if (sessionOr401 instanceof NextResponse) return sessionOr401;
+    
+    const session = sessionOr401 as { user: SessionData['user'] };
     const { id } = await params;
 
     // Find note and verify ownership
@@ -142,48 +92,21 @@ export async function DELETE(
     });
 
     if (!note) {
-      return NextResponse.json(
-        {
-          error: {
-            code: 'NOT_FOUND',
-            message: 'Note not found',
-          },
-        },
-        { status: 404 }
-      );
+      return notFoundResponse('Note');
     }
 
     // Verify ownership - if note is owned by another user, return 404
-    if (note.userId !== session.user.id) {
-      return NextResponse.json(
-        {
-          error: {
-            code: 'NOT_FOUND',
-            message: 'Note not found',
-          },
-        },
-        { status: 404 }
-      );
+    if (!verifyOwnership(note, session.user.id)) {
+      return notFoundResponse('Note');
     }
 
     await prisma.personalNote.delete({
       where: { id },
     });
 
-    return NextResponse.json(
-      { success: true },
-      { status: 200 }
-    );
+    return successResponse({ success: true });
   } catch (error) {
     console.error('Delete note error:', error);
-    return NextResponse.json(
-      {
-        error: {
-          code: 'INTERNAL_ERROR',
-          message: 'Failed to delete note',
-        },
-      },
-      { status: 500 }
-    );
+    return internalError('Failed to delete note');
   }
 }

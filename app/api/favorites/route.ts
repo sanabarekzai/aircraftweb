@@ -1,9 +1,17 @@
 import { NextResponse } from 'next/server';
-import { getIronSession } from 'iron-session';
 import { cookies } from 'next/headers';
 import { sessionOptions, SessionData } from '@/lib/session';
+import { getIronSession } from 'iron-session';
 import { prisma } from '@/lib/prisma';
-import { z } from 'zod';
+import { z, ZodError } from 'zod';
+import {
+  getSessionOr401,
+  checkAircraftExists,
+  internalError,
+  successResponse,
+  validationError,
+  notFoundResponse,
+} from '@/lib/api-helpers';
 
 const postSchema = z.object({
   aircraftId: z.string().uuid('Invalid aircraft ID'),
@@ -11,20 +19,10 @@ const postSchema = z.object({
 
 export async function GET() {
   try {
-    const cookieStore = await cookies();
-    const session = await getIronSession<SessionData>(cookieStore, sessionOptions);
-
-    if (!session.user) {
-      return NextResponse.json(
-        {
-          error: {
-            code: 'UNAUTHORIZED',
-            message: 'Authentication required',
-          },
-        },
-        { status: 401 }
-      );
-    }
+    const sessionOr401 = await getSessionOr401();
+    if (sessionOr401 instanceof NextResponse) return sessionOr401;
+    
+    const session = sessionOr401 as { user: SessionData['user'] };
 
     const favorites = await prisma.favorite.findMany({
       where: { userId: session.user.id },
@@ -35,65 +33,30 @@ export async function GET() {
       },
     });
 
-    return NextResponse.json(
-      {
-        favorites: favorites.map((f) => ({
-          ...f,
-          aircraft: f.aircraft,
-        })),
-      },
-      { status: 200 }
-    );
+    return successResponse({
+      favorites: favorites.map((f) => ({
+        ...f,
+        aircraft: f.aircraft,
+      })),
+    });
   } catch (error) {
     console.error('Get favorites error:', error);
-    return NextResponse.json(
-      {
-        error: {
-          code: 'INTERNAL_ERROR',
-          message: 'Failed to get favorites',
-        },
-      },
-      { status: 500 }
-    );
+    return internalError('Failed to get favorites');
   }
 }
 
 export async function POST(request: Request) {
   try {
-    const cookieStore = await cookies();
-    const session = await getIronSession<SessionData>(cookieStore, sessionOptions);
-
-    if (!session.user) {
-      return NextResponse.json(
-        {
-          error: {
-            code: 'UNAUTHORIZED',
-            message: 'Authentication required',
-          },
-        },
-        { status: 401 }
-      );
-    }
-
+    const sessionOr401 = await getSessionOr401();
+    if (sessionOr401 instanceof NextResponse) return sessionOr401;
+    
+    const session = sessionOr401 as { user: SessionData['user'] };
     const body = await request.json();
     const { aircraftId } = postSchema.parse(body);
 
     // Check if aircraft exists
-    const aircraft = await prisma.aircraft.findUnique({
-      where: { id: aircraftId },
-    });
-
-    if (!aircraft) {
-      return NextResponse.json(
-        {
-          error: {
-            code: 'NOT_FOUND',
-            message: 'Aircraft not found',
-          },
-        },
-        { status: 404 }
-      );
-    }
+    const aircraftCheck = await checkAircraftExists(aircraftId);
+    if (aircraftCheck instanceof NextResponse) return aircraftCheck;
 
     // Check if already favorited
     const existingFavorite = await prisma.favorite.findFirst({
@@ -127,72 +90,36 @@ export async function POST(request: Request) {
       },
     });
 
-    return NextResponse.json(
+    return successResponse(
       {
         favorite: {
           ...favorite,
           aircraft: favorite.aircraft,
         },
       },
-      { status: 201 }
+      201
     );
   } catch (error) {
-    if (error instanceof z.ZodError) {
-      return NextResponse.json(
-        {
-          error: {
-            code: 'INVALID_INPUT',
-            message: 'Validation failed',
-            fieldErrors: error.flatten().fieldErrors,
-          },
-        },
-        { status: 400 }
-      );
+    if (error instanceof ZodError) {
+      return validationError(error.flatten().fieldErrors);
     }
 
     console.error('Add favorite error:', error);
-    return NextResponse.json(
-      {
-        error: {
-          code: 'INTERNAL_ERROR',
-          message: 'Failed to add favorite',
-        },
-      },
-      { status: 500 }
-    );
+    return internalError('Failed to add favorite');
   }
 }
 
 export async function DELETE(request: Request) {
   try {
-    const cookieStore = await cookies();
-    const session = await getIronSession<SessionData>(cookieStore, sessionOptions);
-
-    if (!session.user) {
-      return NextResponse.json(
-        {
-          error: {
-            code: 'UNAUTHORIZED',
-            message: 'Authentication required',
-          },
-        },
-        { status: 401 }
-      );
-    }
-
+    const sessionOr401 = await getSessionOr401();
+    if (sessionOr401 instanceof NextResponse) return sessionOr401;
+    
+    const session = sessionOr401 as { user: SessionData['user'] };
     const { searchParams } = new URL(request.url);
     const aircraftId = searchParams.get('aircraftId');
 
     if (!aircraftId) {
-      return NextResponse.json(
-        {
-          error: {
-            code: 'INVALID_INPUT',
-            message: 'aircraftId is required',
-          },
-        },
-        { status: 400 }
-      );
+      return validationError({ aircraftId: ['aircraftId is required'] });
     }
 
     // Check if favorite exists
@@ -204,35 +131,16 @@ export async function DELETE(request: Request) {
     });
 
     if (!existingFavorite) {
-      return NextResponse.json(
-        {
-          error: {
-            code: 'NOT_FOUND',
-            message: 'Favorite not found',
-          },
-        },
-        { status: 404 }
-      );
+      return notFoundResponse('Favorite');
     }
 
     await prisma.favorite.delete({
       where: { id: existingFavorite.id },
     });
 
-    return NextResponse.json(
-      { success: true },
-      { status: 200 }
-    );
+    return successResponse({ success: true });
   } catch (error) {
     console.error('Delete favorite error:', error);
-    return NextResponse.json(
-      {
-        error: {
-          code: 'INTERNAL_ERROR',
-          message: 'Failed to delete favorite',
-        },
-      },
-      { status: 500 }
-    );
+    return internalError('Failed to delete favorite');
   }
 }

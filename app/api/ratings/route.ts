@@ -1,9 +1,17 @@
 import { NextResponse } from 'next/server';
-import { getIronSession } from 'iron-session';
 import { cookies } from 'next/headers';
 import { sessionOptions, SessionData } from '@/lib/session';
+import { getIronSession } from 'iron-session';
 import { prisma } from '@/lib/prisma';
-import { z } from 'zod';
+import { z, ZodError } from 'zod';
+import {
+  getSessionOr401,
+  checkAircraftExists,
+  internalError,
+  successResponse,
+  validationError,
+  notFoundResponse,
+} from '@/lib/api-helpers';
 
 const postSchema = z.object({
   aircraftId: z.string().uuid('Invalid aircraft ID'),
@@ -13,52 +21,20 @@ const postSchema = z.object({
 // GET /api/ratings?aircraftId=...
 export async function GET(request: Request) {
   try {
-    const cookieStore = await cookies();
-    const session = await getIronSession<SessionData>(cookieStore, sessionOptions);
-
-    if (!session.user) {
-      return NextResponse.json(
-        {
-          error: {
-            code: 'UNAUTHORIZED',
-            message: 'Authentication required',
-          },
-        },
-        { status: 401 }
-      );
-    }
-
+    const sessionOr401 = await getSessionOr401();
+    if (sessionOr401 instanceof NextResponse) return sessionOr401;
+    
+    const session = sessionOr401 as { user: SessionData['user'] };
     const { searchParams } = new URL(request.url);
     const aircraftId = searchParams.get('aircraftId');
 
     if (!aircraftId) {
-      return NextResponse.json(
-        {
-          error: {
-            code: 'INVALID_INPUT',
-            message: 'aircraftId is required',
-          },
-        },
-        { status: 400 }
-      );
+      return validationError({ aircraftId: ['aircraftId is required'] });
     }
 
     // Check if aircraft exists
-    const aircraft = await prisma.aircraft.findUnique({
-      where: { id: aircraftId },
-    });
-
-    if (!aircraft) {
-      return NextResponse.json(
-        {
-          error: {
-            code: 'NOT_FOUND',
-            message: 'Aircraft not found',
-          },
-        },
-        { status: 404 }
-      );
-    }
+    const aircraftCheck = await checkAircraftExists(aircraftId);
+    if (aircraftCheck instanceof NextResponse) return aircraftCheck;
 
     // Get user's rating for this aircraft
     const rating = await prisma.rating.findFirst({
@@ -68,63 +44,26 @@ export async function GET(request: Request) {
       },
     });
 
-    return NextResponse.json(
-      {
-        userRating: rating,
-      },
-      { status: 200 }
-    );
+    return successResponse({ userRating: rating });
   } catch (error) {
     console.error('Get rating error:', error);
-    return NextResponse.json(
-      {
-        error: {
-          code: 'INTERNAL_ERROR',
-          message: 'Failed to get rating',
-        },
-      },
-      { status: 500 }
-    );
+    return internalError('Failed to get rating');
   }
 }
 
 // POST /api/ratings - upsert
 export async function POST(request: Request) {
   try {
-    const cookieStore = await cookies();
-    const session = await getIronSession<SessionData>(cookieStore, sessionOptions);
-
-    if (!session.user) {
-      return NextResponse.json(
-        {
-          error: {
-            code: 'UNAUTHORIZED',
-            message: 'Authentication required',
-          },
-        },
-        { status: 401 }
-      );
-    }
-
+    const sessionOr401 = await getSessionOr401();
+    if (sessionOr401 instanceof NextResponse) return sessionOr401;
+    
+    const session = sessionOr401 as { user: SessionData['user'] };
     const body = await request.json();
     const { aircraftId, stars } = postSchema.parse(body);
 
     // Check if aircraft exists
-    const aircraft = await prisma.aircraft.findUnique({
-      where: { id: aircraftId },
-    });
-
-    if (!aircraft) {
-      return NextResponse.json(
-        {
-          error: {
-            code: 'NOT_FOUND',
-            message: 'Aircraft not found',
-          },
-        },
-        { status: 404 }
-      );
-    }
+    const aircraftCheck = await checkAircraftExists(aircraftId);
+    if (aircraftCheck instanceof NextResponse) return aircraftCheck;
 
     // Upsert rating
     const rating = await prisma.rating.upsert({
@@ -152,36 +91,16 @@ export async function POST(request: Request) {
       ? allRatings.reduce((sum, r) => sum + r.stars, 0) / allRatings.length
       : 0;
 
-    return NextResponse.json(
-      {
-        rating,
-        newAverage: Math.round(newAverage * 10) / 10,
-      },
-      { status: 200 }
-    );
+    return successResponse({
+      rating,
+      newAverage: Math.round(newAverage * 10) / 10,
+    });
   } catch (error) {
-    if (error instanceof z.ZodError) {
-      return NextResponse.json(
-        {
-          error: {
-            code: 'INVALID_INPUT',
-            message: 'Validation failed',
-            fieldErrors: error.flatten().fieldErrors,
-          },
-        },
-        { status: 400 }
-      );
+    if (error instanceof ZodError) {
+      return validationError(error.flatten().fieldErrors);
     }
 
     console.error('Rate error:', error);
-    return NextResponse.json(
-      {
-        error: {
-          code: 'INTERNAL_ERROR',
-          message: 'Failed to rate aircraft',
-        },
-      },
-      { status: 500 }
-    );
+    return internalError('Failed to rate aircraft');
   }
 }

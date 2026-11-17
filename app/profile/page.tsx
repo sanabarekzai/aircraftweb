@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import Link from 'next/link';
 import { useAuth } from '@/context/AuthContext';
 import { useRouter } from 'next/navigation';
 
@@ -92,9 +93,15 @@ export default function ProfilePage() {
 
             <div className="border-t border-slate-700 pt-6">
               <h3 className="text-lg font-semibold mb-4">Account Settings</h3>
-              <p className="text-slate-400">
+              <p className="text-slate-400 mb-4">
                 Manage your account preferences and settings.
               </p>
+              <Link
+                href="/settings"
+                className="inline-flex items-center px-4 py-2 bg-accent-cyan text-white font-medium rounded-lg hover:bg-cyan-600 transition-colors focus-visible:ring-2 focus-visible:ring-cyan-400 focus-visible:outline-none"
+              >
+                Edit Settings
+              </Link>
             </div>
           </div>
         ) : (

@@ -2,7 +2,7 @@
 
 export function HeroBanner() {
   return (
-    <div className="relative w-full h-[60vh] min-h-[400px] max-h-[700px] overflow-hidden rounded-2xl mb-8">
+    <div className="relative w-full min-h-[520px] overflow-hidden rounded-2xl mb-8">
       {/* User-provided Phantom 3500 image */}
       {/* eslint-disable-next-line @next/next/no-img-element */}
       <img
@@ -13,7 +13,7 @@ export function HeroBanner() {
       <div className="absolute inset-0 bg-gradient-to-r from-slate-950/60 via-slate-950/30 to-slate-950/55" />
 
       {/* Content overlay */}
-      <div className="relative z-10 h-full flex flex-col items-center justify-center px-4 text-center">
+      <div className="relative z-10 min-h-[520px] flex flex-col items-center justify-center px-4 py-8 text-center">
         {/* Main title */}
         <h1 className="text-4xl md:text-6xl font-bold text-white mb-4 drop-shadow-lg">
           Phantom 3500
@@ -32,7 +32,7 @@ export function HeroBanner() {
         </a>
 
         {/* Telemetry spec card - floating glassmorphic */}
-        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 md:left-auto md:translate-x-0 md:bottom-auto md:top-1/2 md:-translate-y-1/2 md:right-20 bg-white/10 backdrop-blur-md border border-white/20 rounded-xl p-4 shadow-lg animate-float">
+        <div className="mt-6 w-full max-w-sm bg-white/10 backdrop-blur-md border border-white/20 rounded-xl p-4 shadow-lg">
           <div className="space-y-2">
             <div className="flex items-center gap-3">
               <span className="text-accent-cyan font-mono text-sm font-bold">SPEED</span>

@@ -35,6 +35,7 @@ export default function Navbar() {
     { href: '/search', label: 'Search' },
     { href: '/compare', label: 'Compare' },
     { href: '/logbook', label: 'Logbook' },
+    { href: '/bookings', label: 'Bookings' },
     { href: '/profile', label: 'Profile' },
     { href: '/settings', label: 'Settings' },
   ];

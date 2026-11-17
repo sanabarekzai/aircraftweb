@@ -224,7 +224,17 @@ export default function AircraftDetailPage({
                 )}
               </div>
             </div>
-            <FavoriteButton aircraftId={aircraft.id} initialIsFavorite={isFavorite} />
+            <div className="flex gap-2">
+              <FavoriteButton aircraftId={aircraft.id} initialIsFavorite={isFavorite} />
+              {user && (
+                <Link
+                  href={`/book?aircraftId=${aircraft.id}`}
+                  className="px-4 py-2 bg-accent-cyan text-white text-sm font-medium rounded-lg hover:bg-cyan-600 transition-colors focus-visible:ring-2 focus-visible:ring-cyan-400"
+                >
+                  Book Now
+                </Link>
+              )}
+            </div>
           </div>
 
           {/* Rating Summary */}

@@ -21,22 +21,10 @@
     "tags": ["Concept", "Supersonic", "Experimental"],
     "images": [
       {
-        "url": "TODO_VERIFY_phantom_3500_1",
-        "caption": "Phantom 3500 concept render",
-        "source": "Phantom Aero",
-        "license": "CC-BY-SA"
-      },
-      {
-        "url": "TODO_VERIFY_phantom_3500_2",
-        "caption": "Phantom 3500 side view",
-        "source": "Phantom Aero",
-        "license": "CC-BY-SA"
-      },
-      {
-        "url": "TODO_VERIFY_phantom_3500_3",
-        "caption": "Phantom 3500 cockpit",
-        "source": "Phantom Aero",
-        "license": "CC-BY-SA"
+        "url": "/aircraft/phantom-3500.png",
+        "caption": "Phantom 3500 in flight — image provided by the project owner",
+        "source": "Provided by project owner",
+        "license": "User-provided; not independently verified"
       }
     ]
   },
@@ -62,22 +50,10 @@
     "tags": ["Supersonic", "Airliner"],
     "images": [
       {
-        "url": "TODO_VERIFY_concorde_1",
-        "caption": "Concorde in flight",
-        "source": "British Airways",
-        "license": "Public Domain"
-      },
-      {
-        "url": "TODO_VERIFY_concorde_2",
-        "caption": "Concorde landing",
-        "source": "Air France",
-        "license": "Public Domain"
-      },
-      {
-        "url": "TODO_VERIFY_concorde_3",
-        "caption": "Concorde cockpit",
-        "source": "Wikipedia",
-        "license": "CC-BY-SA"
+        "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/e/eb/British_Airways_Concorde_G-BOAC_03.jpg/960px-British_Airways_Concorde_G-BOAC_03.jpg",
+        "caption": "British Airways Concorde G-BOAC — Eduard Marmet",
+        "source": "https://commons.wikimedia.org/wiki/File:British_Airways_Concorde_G-BOAC_03.jpg",
+        "license": "CC BY-SA 3.0"
       }
     ]
   },
@@ -103,21 +79,9 @@
     "tags": ["Military", "Supersonic", "Reconnaissance"],
     "images": [
       {
-        "url": "TODO_VERIFY_sr71_1",
-        "caption": "SR-71 Blackbird in flight",
-        "source": "USAF",
-        "license": "Public Domain"
-      },
-      {
-        "url": "TODO_VERIFY_sr71_2",
-        "caption": "SR-71 Blackbird on ground",
-        "source": "NASA",
-        "license": "Public Domain"
-      },
-      {
-        "url": "TODO_VERIFY_sr71_3",
-        "caption": "SR-71 Blackbird cockpit",
-        "source": "USAF",
+        "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/9/97/Lockheed_SR-71_Blackbird.jpg/960px-Lockheed_SR-71_Blackbird.jpg",
+        "caption": "SR-71 Blackbird — USAF / Judson Brohmer",
+        "source": "https://commons.wikimedia.org/wiki/File:Lockheed_SR-71_Blackbird.jpg",
         "license": "Public Domain"
       }
     ]
@@ -144,22 +108,10 @@
     "tags": ["Trainer"],
     "images": [
       {
-        "url": "TODO_VERIFY_cessna_1",
-        "caption": "Cessna 172 Skyhawk in flight",
-        "source": "Cessna",
-        "license": "Public Domain"
-      },
-      {
-        "url": "TODO_VERIFY_cessna_2",
-        "caption": "Cessna 172 Skyhawk on ground",
-        "source": "Wikipedia",
-        "license": "CC-BY-SA"
-      },
-      {
-        "url": "TODO_VERIFY_cessna_3",
-        "caption": "Cessna 172 Skyhawk cockpit",
-        "source": "Wikipedia",
-        "license": "CC-BY-SA"
+        "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/c/ca/Cessna_172S_Skyhawk_%E2%80%98G-JMKE%E2%80%99_%2845077563364%29.jpg/960px-Cessna_172S_Skyhawk_%E2%80%98G-JMKE%E2%80%99_%2845077563364%29.jpg",
+        "caption": "Cessna 172S Skyhawk G-JMKE — Alan Wilson",
+        "source": "https://commons.wikimedia.org/wiki/File:Cessna_172S_Skyhawk_%E2%80%98G-JMKE%E2%80%99_(45077563364).jpg",
+        "license": "CC BY-SA 2.0"
       }
     ]
   },
@@ -185,22 +137,10 @@
     "tags": ["Airliner"],
     "images": [
       {
-        "url": "TODO_VERIFY_747_1",
-        "caption": "Boeing 747-8 in flight",
-        "source": "Boeing",
-        "license": "Public Domain"
-      },
-      {
-        "url": "TODO_VERIFY_747_2",
-        "caption": "Boeing 747-8 on ground",
-        "source": "Boeing",
-        "license": "Public Domain"
-      },
-      {
-        "url": "TODO_VERIFY_747_3",
-        "caption": "Boeing 747-8 cockpit",
-        "source": "Boeing",
-        "license": "Public Domain"
+        "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/b/b1/D-ABYT_at_FRA.jpg/960px-D-ABYT_at_FRA.jpg",
+        "caption": "Lufthansa Boeing 747-8 D-ABYT at Frankfurt — Juke Schweizer",
+        "source": "https://commons.wikimedia.org/wiki/File:D-ABYT_at_FRA.jpg",
+        "license": "CC BY-SA 4.0"
       }
     ]
   },
@@ -226,21 +166,9 @@
     "tags": ["Military", "Fighter", "Supersonic"],
     "images": [
       {
-        "url": "TODO_VERIFY_f22_1",
-        "caption": "F-22 Raptor in flight",
-        "source": "USAF",
-        "license": "Public Domain"
-      },
-      {
-        "url": "TODO_VERIFY_f22_2",
-        "caption": "F-22 Raptor on ground",
-        "source": "USAF",
-        "license": "Public Domain"
-      },
-      {
-        "url": "TODO_VERIFY_f22_3",
-        "caption": "F-22 Raptor cockpit",
-        "source": "USAF",
+        "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/1/1e/F-22_Raptor_edit1_%28cropped%29.jpg/960px-F-22_Raptor_edit1_%28cropped%29.jpg",
+        "caption": "F-22 Raptor — USAF / Master Sgt. Andy Dunaway; cropped Wikimedia version",
+        "source": "https://commons.wikimedia.org/wiki/File:F-22_Raptor_edit1_(cropped).jpg",
         "license": "Public Domain"
       }
     ]
@@ -267,22 +195,10 @@
     "tags": ["Airliner"],
     "images": [
       {
-        "url": "TODO_VERIFY_a350_1",
-        "caption": "Airbus A350-1000 in flight",
-        "source": "Airbus",
-        "license": "Public Domain"
-      },
-      {
-        "url": "TODO_VERIFY_a350_2",
-        "caption": "Airbus A350-1000 on ground",
-        "source": "Airbus",
-        "license": "Public Domain"
-      },
-      {
-        "url": "TODO_VERIFY_a350_3",
-        "caption": "Airbus A350-1000 cockpit",
-        "source": "Airbus",
-        "license": "Public Domain"
+        "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/a/a5/Paris_Air_Show_2019%2C_Le_Bourget_%28SIAE9583%29.jpg/960px-Paris_Air_Show_2019%2C_Le_Bourget_%28SIAE9583%29.jpg",
+        "caption": "Airbus A350-1000 at Paris Air Show 2019 — Matti Blume",
+        "source": "https://commons.wikimedia.org/wiki/File:Paris_Air_Show_2019,_Le_Bourget_(SIAE9583).jpg",
+        "license": "CC BY-SA 4.0"
       }
     ]
   },
@@ -308,22 +224,10 @@
     "tags": ["Military", "Historical", "Fighter"],
     "images": [
       {
-        "url": "TODO_VERIFY_spitfire_1",
-        "caption": "Supermarine Spitfire Mk IX in flight",
-        "source": "RAF",
-        "license": "Public Domain"
-      },
-      {
-        "url": "TODO_VERIFY_spitfire_2",
-        "caption": "Supermarine Spitfire Mk IX on ground",
-        "source": "Wikipedia",
-        "license": "Public Domain"
-      },
-      {
-        "url": "TODO_VERIFY_spitfire_3",
-        "caption": "Supermarine Spitfire Mk IX cockpit",
-        "source": "Wikipedia",
-        "license": "Public Domain"
+        "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/b/b7/Supermarine_Spitfire_Mk.IXe_%E2%80%98EN199_-_R-B%E2%80%99_%E2%80%9CMary_Rose%E2%80%9D_%2850210689186%29.jpg/960px-Supermarine_Spitfire_Mk.IXe_%E2%80%98EN199_-_R-B%E2%80%99_%E2%80%9CMary_Rose%E2%80%9D_%2850210689186%29.jpg",
+        "caption": "Supermarine Spitfire Mk.IXe EN199 Mary Rose — Alan Wilson",
+        "source": "https://commons.wikimedia.org/wiki/File:Supermarine_Spitfire_Mk.IXe_%E2%80%98EN199_-_R-B%E2%80%99_%E2%80%9CMary_Rose%E2%80%9D_(50210689186).jpg",
+        "license": "CC BY-SA 2.0"
       }
     ]
   },
@@ -349,22 +253,10 @@
     "tags": ["Historical", "Trainer"],
     "images": [
       {
-        "url": "TODO_VERIFY_piper_1",
-        "caption": "Piper J-3 Cub in flight",
-        "source": "Piper",
-        "license": "Public Domain"
-      },
-      {
-        "url": "TODO_VERIFY_piper_2",
-        "caption": "Piper J-3 Cub on ground",
-        "source": "Wikipedia",
-        "license": "Public Domain"
-      },
-      {
-        "url": "TODO_VERIFY_piper_3",
-        "caption": "Piper J-3 Cub cockpit",
-        "source": "Wikipedia",
-        "license": "Public Domain"
+        "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/a/a1/20180328_Piper_J-3_Cub_Udvar-Hazy_1.jpg/960px-20180328_Piper_J-3_Cub_Udvar-Hazy_1.jpg",
+        "caption": "Piper J-3 Cub at the Udvar-Hazy Center — Balon Greyjoy",
+        "source": "https://commons.wikimedia.org/wiki/File:20180328_Piper_J-3_Cub_Udvar-Hazy_1.jpg",
+        "license": "CC0"
       }
     ]
   },
@@ -390,21 +282,9 @@
     "tags": ["Experimental", "Rocket-Powered", "Supersonic"],
     "images": [
       {
-        "url": "TODO_VERIFY_bell_x1_1",
-        "caption": "Bell X-1 in flight",
-        "source": "NASA",
-        "license": "Public Domain"
-      },
-      {
-        "url": "TODO_VERIFY_bell_x1_2",
-        "caption": "Bell X-1 on ground",
-        "source": "NASA",
-        "license": "Public Domain"
-      },
-      {
-        "url": "TODO_VERIFY_bell_x1_3",
-        "caption": "Bell X-1 cockpit",
-        "source": "NASA",
+        "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/5/50/Bell_X-1_46-062_%28in_flight%29.jpg/960px-Bell_X-1_46-062_%28in_flight%29.jpg",
+        "caption": "Bell X-1 46-062 in flight — NASA",
+        "source": "https://commons.wikimedia.org/wiki/File:Bell_X-1_46-062_(in_flight).jpg",
         "license": "Public Domain"
       }
     ]

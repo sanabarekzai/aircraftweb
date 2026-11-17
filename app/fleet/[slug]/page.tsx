@@ -2,6 +2,7 @@ import { notFound } from 'next/navigation';
 import { MediaViewer } from '@/components/detail/MediaViewer';
 import { SpecAccordions } from '@/components/detail/SpecAccordions';
 import Link from 'next/link';
+import { prisma } from '@/lib/prisma';
 
 interface AircraftImage {
   id: string;
@@ -37,17 +38,27 @@ interface AircraftDetail {
 }
 
 async function getAircraft(slug: string): Promise<AircraftDetail | null> {
-  const response = await fetch(`${process.env.NEXTAUTH_URL || 'http://localhost:3000'}/api/aircraft/${slug}`);
-  
-  if (!response.ok) {
-    if (response.status === 404) {
-      return null;
-    }
-    throw new Error('Failed to fetch aircraft');
-  }
+  const aircraft = await prisma.aircraft.findUnique({
+    where: { slug },
+    include: {
+      images: { orderBy: { id: 'asc' } },
+      tags: { orderBy: { name: 'asc' } },
+      ratings: true,
+    },
+  });
 
-  const data = await response.json();
-  return data.aircraft as AircraftDetail;
+  if (!aircraft) return null;
+
+  const avgRating = aircraft.ratings.length > 0
+    ? aircraft.ratings.reduce((sum, rating) => sum + rating.stars, 0) / aircraft.ratings.length
+    : 0;
+
+  return {
+    ...aircraft,
+    tags: aircraft.tags.map((tag) => tag.name),
+    avgRating: Math.round(avgRating * 10) / 10,
+    totalRatings: aircraft.ratings.length,
+  };
 }
 
 function formatEra(era: string) {

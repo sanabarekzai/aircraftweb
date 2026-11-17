@@ -108,7 +108,19 @@ export function MediaViewer({ youtubeId, images }: MediaViewerProps) {
                       <p className="text-white truncate">{image.caption}</p>
                     )}
                     <p className="text-slate-400">
-                      {image.source} | {image.license}
+                      {image.source.startsWith('http') ? (
+                        <a
+                          href={image.source}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="underline decoration-slate-500 underline-offset-2 hover:text-white"
+                        >
+                          Source
+                        </a>
+                      ) : (
+                        image.source
+                      )}{' '}
+                      | {image.license}
                     </p>
                   </div>
                 </button>

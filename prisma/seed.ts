@@ -1,4 +1,4 @@
-import { PrismaClient } from '@prisma/client';
+import { PrismaClient, type Category, type Era } from '@prisma/client';
 import aircraftData from '../data/seed-aircraft.json';
 
 const prisma = new PrismaClient();
@@ -30,8 +30,8 @@ async function main() {
       update: {
         name: aircraft.name,
         isConcept: aircraft.isConcept,
-        category: aircraft.category as any,
-        era: aircraft.era as any,
+        category: aircraft.category as Category,
+        era: aircraft.era as Era,
         releaseYear: aircraft.releaseYear,
         topSpeedKmh: aircraft.topSpeedKmh,
         serviceCeilingFt: aircraft.serviceCeilingFt,
@@ -50,8 +50,8 @@ async function main() {
         slug: aircraft.slug,
         name: aircraft.name,
         isConcept: aircraft.isConcept,
-        category: aircraft.category as any,
-        era: aircraft.era as any,
+        category: aircraft.category as Category,
+        era: aircraft.era as Era,
         releaseYear: aircraft.releaseYear,
         topSpeedKmh: aircraft.topSpeedKmh,
         serviceCeilingFt: aircraft.serviceCeilingFt,
@@ -77,6 +77,20 @@ async function main() {
           data: { tags: { connect: { id: tag.id } } },
         });
       }
+    }
+
+    // Remove only obsolete placeholder rows and the previous concept illustration.
+    // Preserve real gallery images and all user-owned data.
+    if (aircraft.images.some((image) => !image.url.startsWith('TODO_VERIFY_'))) {
+      await prisma.aircraftImage.deleteMany({
+        where: {
+          aircraftId: createdAircraft.id,
+          OR: [
+            { url: { startsWith: 'TODO_VERIFY_' } },
+            ...(aircraft.slug === 'phantom-3500' ? [{ url: '/aircraft/phantom-3500.svg' }] : []),
+          ],
+        },
+      });
     }
 
     // Seed images using upsert with unique constraint on (aircraftId, url)

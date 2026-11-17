@@ -3,29 +3,14 @@
 export function HeroBanner() {
   return (
     <div className="relative w-full h-[60vh] min-h-[400px] max-h-[700px] overflow-hidden rounded-2xl mb-8">
-      {/* Background - using a gradient that suggests a supersonic jet */}
-      <div className="absolute inset-0 bg-gradient-to-br from-slate-800 via-slate-900 to-black" />
-      
-      {/* Simulated jet silhouette */}
-      <div className="absolute inset-0 flex items-center justify-center">
-        <svg
-          className="w-full h-full max-w-2xl text-slate-700/30"
-          viewBox="0 0 800 200"
-          fill="currentColor"
-        >
-          {/* Jet body */}
-          <path d="M50 100 L750 100 L720 110 L70 110 Z" />
-          {/* Nose */}
-          <path d="M50 100 L20 100 L20 90 L50 100 Z" />
-          {/* Tail */}
-          <path d="M750 100 L780 90 L780 110 Z" />
-          {/* Wings */}
-          <path d="M300 100 L350 80 L450 80 L400 100 Z" />
-          <path d="M300 110 L350 130 L450 130 L400 110 Z" />
-          {/* Afterburner glow */}
-          <ellipse cx="750" cy="100" rx="20" ry="10" fill="currentColor" opacity="0.6" />
-        </svg>
-      </div>
+      {/* User-provided Phantom 3500 image */}
+      {/* eslint-disable-next-line @next/next/no-img-element */}
+      <img
+        src="/aircraft/phantom-3500.png"
+        alt="Phantom 3500 concept aircraft flying over mountains"
+        className="absolute inset-0 h-full w-full object-cover object-center"
+      />
+      <div className="absolute inset-0 bg-gradient-to-r from-slate-950/60 via-slate-950/30 to-slate-950/55" />
 
       {/* Content overlay */}
       <div className="relative z-10 h-full flex flex-col items-center justify-center px-4 text-center">

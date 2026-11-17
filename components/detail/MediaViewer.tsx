@@ -25,8 +25,8 @@ export function MediaViewer({ youtubeId, images }: MediaViewerProps) {
     return /^[\w-]{11}$/.test(id);
   };
 
-  const hasValidImages = images.length > 0 && 
-    images.some(img => !img.url.startsWith('TODO_VERIFY_'));
+  const coverImage = images.find((image) => !image.url.startsWith('TODO_VERIFY_'));
+  const hasValidImages = Boolean(coverImage);
 
   return (
     <div className="bg-panel rounded-lg p-6 mb-8">
@@ -34,7 +34,7 @@ export function MediaViewer({ youtubeId, images }: MediaViewerProps) {
 
       {/* Video Section */}
       <div className="mb-6">
-        <h3 className="text-lg text-slate-300 mb-3">Video</h3>
+        <h3 className="text-lg text-slate-300 mb-3">{isValidYouTubeId(youtubeId) ? 'Video' : 'Aircraft image'}</h3>
         
         {isValidYouTubeId(youtubeId) ? (
           <div className="relative aspect-video bg-slate-800 rounded-lg overflow-hidden">
@@ -48,6 +48,19 @@ export function MediaViewer({ youtubeId, images }: MediaViewerProps) {
               loading="lazy"
             />
           </div>
+        ) : coverImage ? (
+          <figure>
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src={coverImage.url}
+              alt={coverImage.caption || 'Aircraft'}
+              className="w-full max-h-[600px] object-contain bg-slate-900 rounded-lg"
+            />
+            <figcaption className="mt-2 text-sm text-slate-400">
+              {coverImage.caption}
+            </figcaption>
+            <p className="mt-2 text-xs text-slate-400">No verified video has been added yet.</p>
+          </figure>
         ) : (
           <div className="relative aspect-video bg-slate-800/50 rounded-lg overflow-hidden flex items-center justify-center border border-slate-700">
             <div className="text-center text-slate-400">

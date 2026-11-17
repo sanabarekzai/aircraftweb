@@ -1,7 +1,4 @@
 import { NextResponse } from 'next/server';
-import { cookies } from 'next/headers';
-import { getIronSession } from 'iron-session';
-import { sessionOptions, SessionData } from '@/lib/session';
 import { prisma } from '@/lib/prisma';
 import { internalError, getSessionOr401 } from '@/lib/api-helpers';
 
@@ -11,7 +8,7 @@ export async function GET() {
     const sessionOr401 = await getSessionOr401();
     if (sessionOr401 instanceof NextResponse) return sessionOr401;
     
-    const session = sessionOr401 as { user: SessionData['user'] };
+    const session = sessionOr401;
 
     // Get user data
     const user = await prisma.user.findUnique({

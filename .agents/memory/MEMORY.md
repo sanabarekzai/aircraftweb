@@ -1,0 +1,1 @@
+- [Branch preview consistency](branch-preview-consistency.md) — branches share development data; preserve unknown aircraft specs and verify schema compatibility after switching.

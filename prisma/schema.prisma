@@ -48,10 +48,10 @@ model Aircraft {
   topSpeedKmh                Float
   serviceCeilingFt           Float
   maxRangeNm                 Float
-  wingspanM                  Float
-  maxTakeoffWeightLbs        Float
-  stallSpeedKts              Float
-  liftToDragRatio            Float
+  wingspanM                  Float?
+  maxTakeoffWeightLbs        Float?
+  stallSpeedKts              Float?
+  liftToDragRatio            Float?
   engineType                 String
   description                String          @db.Text
   flightControlsDescription String          @db.Text

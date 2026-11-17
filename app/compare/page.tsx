@@ -12,9 +12,9 @@ interface Aircraft {
   engineType: string;
   topSpeedKmh: number;
   serviceCeilingFt: number;
-  wingspanM: number;
-  maxTakeoffWeightLbs: number;
-  stallSpeedKts: number;
+  wingspanM: number | null;
+  maxTakeoffWeightLbs: number | null;
+  stallSpeedKts: number | null;
 }
 
 export default function ComparePage() {

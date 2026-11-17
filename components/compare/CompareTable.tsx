@@ -5,14 +5,15 @@ import { StatProgressBar } from './StatProgressBar';
 interface AircraftSpecs {
   id: string;
   name: string;
+  slug: string;
   category: string;
   era: string;
   engineType: string;
   topSpeedKmh: number;
   serviceCeilingFt: number;
-  wingspanM: number;
-  maxTakeoffWeightLbs: number;
-  stallSpeedKts: number;
+  wingspanM: number | null;
+  maxTakeoffWeightLbs: number | null;
+  stallSpeedKts: number | null;
 }
 
 interface CompareTableProps {
@@ -58,11 +59,12 @@ export function CompareTable({ aircraftA, aircraftB }: CompareTableProps) {
 
   // Calculate max values for progress bars
   const maxSpeed = Math.max(aircraftA.topSpeedKmh, aircraftB.topSpeedKmh);
-  const maxWingspan = Math.max(aircraftA.wingspanM, aircraftB.wingspanM);
+  const maxWingspan = Math.max(aircraftA.wingspanM ?? 0, aircraftB.wingspanM ?? 0);
   const maxCeiling = Math.max(aircraftA.serviceCeilingFt, aircraftB.serviceCeilingFt);
 
   // Format weights
-  const formatWeight = (lbs: number): string => {
+  const formatWeight = (lbs: number | null): string => {
+    if (lbs == null) return 'Not verified';
     if (lbs >= 1000) {
       return `${(lbs / 1000).toFixed(0)}k lbs`;
     }
@@ -71,6 +73,13 @@ export function CompareTable({ aircraftA, aircraftB }: CompareTableProps) {
 
   return (
     <div className="w-full">
+      {[aircraftA, aircraftB].some((a) => a.slug === 'phantom-3500') && (
+        <p className="text-sm text-amber-300 mb-4">
+          Phantom 3500 values are manufacturer targets: speed is a published reference,
+          not a certified maximum; 51,000 ft is cruise altitude, not a verified service ceiling.
+          Missing specifications are not ranked.
+        </p>
+      )}
       {/* Basic Specs Table */}
       <div className="bg-panel rounded-lg p-6 mb-8">
         <h2 className="text-xl font-semibold text-white mb-6">Specifications</h2>
@@ -106,8 +115,8 @@ export function CompareTable({ aircraftA, aircraftB }: CompareTableProps) {
               />
               <SpecRow
                 label="Stall Speed"
-                valueA={`${aircraftA.stallSpeedKts} kts`}
-                valueB={`${aircraftB.stallSpeedKts} kts`}
+                valueA={aircraftA.stallSpeedKts == null ? 'Not verified' : `${aircraftA.stallSpeedKts} kts`}
+                valueB={aircraftB.stallSpeedKts == null ? 'Not verified' : `${aircraftB.stallSpeedKts} kts`}
               />
             </tbody>
           </table>
@@ -122,7 +131,7 @@ export function CompareTable({ aircraftA, aircraftB }: CompareTableProps) {
           valueA={aircraftA.topSpeedKmh}
           valueB={aircraftB.topSpeedKmh}
           maxValue={maxSpeed}
-          label="Max Speed"
+          label="Speed (Phantom: target reference)"
           unit=" km/h"
         />
 
@@ -138,7 +147,7 @@ export function CompareTable({ aircraftA, aircraftB }: CompareTableProps) {
           valueA={aircraftA.serviceCeilingFt}
           valueB={aircraftB.serviceCeilingFt}
           maxValue={maxCeiling}
-          label="Service Ceiling"
+          label="Altitude (Phantom: cruise altitude)"
           unit=" ft"
         />
       </div>

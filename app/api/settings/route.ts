@@ -1,7 +1,4 @@
 import { NextResponse } from 'next/server';
-import { cookies } from 'next/headers';
-import { getIronSession } from 'iron-session';
-import { sessionOptions, SessionData } from '@/lib/session';
 import { prisma } from '@/lib/prisma';
 import { z, ZodError } from 'zod';
 import bcrypt from 'bcryptjs';
@@ -25,7 +22,7 @@ export async function PUT(request: Request) {
     const sessionOr401 = await getSessionOr401();
     if (sessionOr401 instanceof NextResponse) return sessionOr401;
     
-    const session = sessionOr401 as { user: SessionData['user'] };
+    const session = sessionOr401;
     const body = await request.json();
     const { username, email, currentPassword, newPassword } = updateSchema.parse(body);
 

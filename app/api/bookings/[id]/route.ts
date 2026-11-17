@@ -1,7 +1,4 @@
 import { NextResponse } from 'next/server';
-import { cookies } from 'next/headers';
-import { getIronSession } from 'iron-session';
-import { sessionOptions, SessionData } from '@/lib/session';
 import { prisma } from '@/lib/prisma';
 import {
   getSessionOr401,
@@ -20,7 +17,7 @@ export async function DELETE(
     const sessionOr401 = await getSessionOr401();
     if (sessionOr401 instanceof NextResponse) return sessionOr401;
     
-    const session = sessionOr401 as { user: SessionData['user'] };
+    const session = sessionOr401;
     const { id } = await params;
 
     // Find booking
@@ -59,7 +56,7 @@ export async function PUT(
     const sessionOr401 = await getSessionOr401();
     if (sessionOr401 instanceof NextResponse) return sessionOr401;
     
-    const session = sessionOr401 as { user: SessionData['user'] };
+    const session = sessionOr401;
     const { id } = await params;
     const body = await request.json();
     const { startDate, endDate, notes } = body;

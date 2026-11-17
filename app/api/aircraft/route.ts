@@ -32,10 +32,10 @@ interface AircraftWithRelations {
   topSpeedKmh: number;
   serviceCeilingFt: number;
   maxRangeNm: number;
-  wingspanM: number;
-  maxTakeoffWeightLbs: number;
-  stallSpeedKts: number;
-  liftToDragRatio: number;
+  wingspanM: number | null;
+  maxTakeoffWeightLbs: number | null;
+  stallSpeedKts: number | null;
+  liftToDragRatio: number | null;
   engineType: string;
   description: string;
   flightControlsDescription: string;

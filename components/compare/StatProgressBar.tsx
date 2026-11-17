@@ -3,8 +3,8 @@
 import { useMemo } from 'react';
 
 interface StatProgressBarProps {
-  valueA: number;
-  valueB: number;
+  valueA: number | null;
+  valueB: number | null;
   maxValue: number;
   label: string;
   unit?: string;
@@ -13,22 +13,25 @@ interface StatProgressBarProps {
 export function StatProgressBar({ valueA, valueB, maxValue, label, unit = '' }: StatProgressBarProps) {
   // Calculate percentages, clamped between 0 and 100
   const percentA = useMemo(() => {
+    if (valueA == null || maxValue <= 0) return 0;
     const raw = (valueA / maxValue) * 100;
     return Math.min(100, Math.max(0, raw));
   }, [valueA, maxValue]);
 
   const percentB = useMemo(() => {
+    if (valueB == null || maxValue <= 0) return 0;
     const raw = (valueB / maxValue) * 100;
     return Math.min(100, Math.max(0, raw));
   }, [valueB, maxValue]);
 
   // Determine if there's a winner (only if values are not equal)
-  const isWinnerA = valueA > valueB;
-  const isWinnerB = valueB > valueA;
+  const isWinnerA = valueA != null && valueB != null && valueA > valueB;
+  const isWinnerB = valueA != null && valueB != null && valueB > valueA;
   const isTie = valueA === valueB;
 
   // Format value for display
-  const formatValue = (value: number): string => {
+  const formatValue = (value: number | null): string => {
+    if (value == null) return 'Not verified';
     // If the value is an integer, don't show decimal
     if (Number.isInteger(value)) {
       return `${value}${unit}`;

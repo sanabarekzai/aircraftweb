@@ -1,4 +1,4 @@
-import { PrismaClient } from '@prisma/client';
+import { PrismaClient, type Category, type Era } from '@prisma/client';
 import aircraftData from '../data/seed-aircraft.json';
 
 const prisma = new PrismaClient();
@@ -30,8 +30,8 @@ async function main() {
       update: {
         name: aircraft.name,
         isConcept: aircraft.isConcept,
-        category: aircraft.category as any,
-        era: aircraft.era as any,
+        category: aircraft.category as Category,
+        era: aircraft.era as Era,
         releaseYear: aircraft.releaseYear,
         topSpeedKmh: aircraft.topSpeedKmh,
         serviceCeilingFt: aircraft.serviceCeilingFt,
@@ -50,8 +50,8 @@ async function main() {
         slug: aircraft.slug,
         name: aircraft.name,
         isConcept: aircraft.isConcept,
-        category: aircraft.category as any,
-        era: aircraft.era as any,
+        category: aircraft.category as Category,
+        era: aircraft.era as Era,
         releaseYear: aircraft.releaseYear,
         topSpeedKmh: aircraft.topSpeedKmh,
         serviceCeilingFt: aircraft.serviceCeilingFt,
@@ -68,6 +68,17 @@ async function main() {
       },
     });
 
+    if (aircraft.slug === 'phantom-3500') {
+      const obsoleteTags = await prisma.tag.findMany({
+        where: { name: { in: ['Concept', 'Supersonic', 'Experimental'] } },
+        select: { id: true },
+      });
+      await prisma.aircraft.update({
+        where: { id: createdAircraft.id },
+        data: { tags: { disconnect: obsoleteTags } },
+      });
+    }
+
     // Seed tags for this aircraft
     for (const tagName of aircraft.tags) {
       const tag = await prisma.tag.findUnique({ where: { name: tagName } });
@@ -79,8 +90,13 @@ async function main() {
       }
     }
 
+    // Never let placeholder rows replace the usable gallery photos.
+    const usableImages = aircraft.images.filter((image) => !image.url.startsWith('TODO_VERIFY_'));
+    await prisma.aircraftImage.deleteMany({
+      where: { aircraftId: createdAircraft.id, url: { startsWith: 'TODO_VERIFY_' } },
+    });
     // Seed images using upsert with unique constraint on (aircraftId, url)
-    for (const image of aircraft.images) {
+    for (const image of usableImages) {
       await prisma.aircraftImage.upsert({
         where: {
           aircraftId_url: {

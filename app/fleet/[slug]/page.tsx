@@ -30,10 +30,10 @@ interface AircraftDetail {
   topSpeedKmh: number;
   serviceCeilingFt: number;
   maxRangeNm: number;
-  wingspanM: number;
-  maxTakeoffWeightLbs: number;
-  stallSpeedKts: number;
-  liftToDragRatio: number;
+  wingspanM: number | null;
+  maxTakeoffWeightLbs: number | null;
+  stallSpeedKts: number | null;
+  liftToDragRatio: number | null;
   engineType: string;
   description: string;
   flightControlsDescription: string;
@@ -218,7 +218,7 @@ export default function AircraftDetailPage({
                   <>
                     <span className="text-slate-500">&bull;</span>
                     <span className="text-xs bg-amber-500/20 text-amber-400 px-2 py-0.5 rounded-full">
-                      Concept
+                      {aircraft.slug === 'phantom-3500' ? 'In Development' : 'Concept'}
                     </span>
                   </>
                 )}
@@ -271,6 +271,7 @@ export default function AircraftDetailPage({
 
         {/* Specifications */}
         <SpecAccordions
+          isDevelopmentProgram={aircraft.slug === 'phantom-3500'}
           airframeSpecs={{
             topSpeedKmh: aircraft.topSpeedKmh,
             serviceCeilingFt: aircraft.serviceCeilingFt,

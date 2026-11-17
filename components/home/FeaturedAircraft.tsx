@@ -65,8 +65,8 @@ export function FeaturedAircraft() {
   };
 
   const formatSpeed = (speed: number) => {
-    const machSpeeds = [2550, 2179, 3540, 2414, 1540];
-    if (machSpeeds.includes(speed)) {
+    const approximateSpeeds = [950, 2179, 3540, 2414, 1540];
+    if (approximateSpeeds.includes(speed)) {
       return `${speed} km/h (approx.)`;
     }
     return `${speed} km/h`;
@@ -132,7 +132,7 @@ export function FeaturedAircraft() {
         
         {aircraft.isConcept && (
           <span className="absolute top-3 left-3 px-2 py-1 bg-amber-500/20 text-amber-400 text-xs font-medium rounded-full border border-amber-500/30">
-            Concept
+            In Development
           </span>
         )}
       </div>

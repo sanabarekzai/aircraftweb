@@ -23,10 +23,10 @@ interface AircraftDetail {
   topSpeedKmh: number;
   serviceCeilingFt: number;
   maxRangeNm: number;
-  wingspanM: number;
-  maxTakeoffWeightLbs: number;
-  stallSpeedKts: number;
-  liftToDragRatio: number;
+  wingspanM: number | null;
+  maxTakeoffWeightLbs: number | null;
+  stallSpeedKts: number | null;
+  liftToDragRatio: number | null;
   engineType: string;
   description: string;
   flightControlsDescription: string;
@@ -125,7 +125,7 @@ export default async function AircraftDetailPage({
                   <>
                     <span className="text-slate-500">&bull;</span>
                     <span className="text-xs bg-amber-500/20 text-amber-400 px-2 py-0.5 rounded-full">
-                      Concept
+                      In Development
                     </span>
                   </>
                 )}
@@ -155,6 +155,7 @@ export default async function AircraftDetailPage({
 
         {/* Specifications */}
         <SpecAccordions
+          isDevelopmentProgram={aircraft.isConcept}
           airframeSpecs={{
             topSpeedKmh: aircraft.topSpeedKmh,
             serviceCeilingFt: aircraft.serviceCeilingFt,

@@ -4,21 +4,22 @@ import { useState } from 'react';
 import { ChevronDown, ChevronUp } from 'lucide-react';
 
 interface SpecAccordionsProps {
+  isDevelopmentProgram: boolean;
   airframeSpecs: {
     topSpeedKmh: number;
     serviceCeilingFt: number;
     maxRangeNm: number;
-    wingspanM: number;
-    maxTakeoffWeightLbs: number;
-    stallSpeedKts: number;
-    liftToDragRatio: number;
+    wingspanM: number | null;
+    maxTakeoffWeightLbs: number | null;
+    stallSpeedKts: number | null;
+    liftToDragRatio: number | null;
   };
   engineSpecs: {
     engineType: string;
     description: string;
   };
   aerodynamics: {
-    liftToDragRatio: number;
+    liftToDragRatio: number | null;
     description: string;
   };
   flightControls: {
@@ -27,6 +28,7 @@ interface SpecAccordionsProps {
 }
 
 export function SpecAccordions({
+  isDevelopmentProgram,
   airframeSpecs,
   engineSpecs,
   aerodynamics,
@@ -39,8 +41,8 @@ export function SpecAccordions({
   };
 
   const formatSpeed = (speed: number, unit: string = 'km/h') => {
-    const machSpeeds = [2550, 2179, 3540, 2414, 1540];
-    if (machSpeeds.includes(speed) && unit === 'km/h') {
+    const approximateSpeeds = [950, 2179, 3540, 2414, 1540];
+    if (approximateSpeeds.includes(speed) && unit === 'km/h') {
       return `${speed} ${unit} (approx.)`;
     }
     return `${speed} ${unit}`;
@@ -75,13 +77,22 @@ export function SpecAccordions({
             aria-expanded={openSection === 'airframe'}
           >
             <div className="p-4 pb-6 grid grid-cols-1 md:grid-cols-2 gap-4">
-              <SpecRow label="Top Speed" value={formatSpeed(airframeSpecs.topSpeedKmh, 'km/h')} />
-              <SpecRow label="Service Ceiling" value={`${airframeSpecs.serviceCeilingFt.toLocaleString()} ft`} />
-              <SpecRow label="Max Range" value={`${airframeSpecs.maxRangeNm.toLocaleString()} NM`} />
-              <SpecRow label="Wingspan" value={`${airframeSpecs.wingspanM} m`} />
-              <SpecRow label="MTOW" value={`${airframeSpecs.maxTakeoffWeightLbs.toLocaleString()} lbs`} />
-              <SpecRow label="Stall Speed" value={`${airframeSpecs.stallSpeedKts} kts`} />
-              <SpecRow label="L/D Ratio" value={airframeSpecs.liftToDragRatio.toFixed(1)} />
+              <SpecRow
+                label={isDevelopmentProgram ? 'Published Speed Reference' : 'Top Speed'}
+                value={isDevelopmentProgram ? 'Transonic; 590 mph reference' : formatSpeed(airframeSpecs.topSpeedKmh, 'km/h')}
+              />
+              <SpecRow
+                label={isDevelopmentProgram ? 'Cruise Altitude' : 'Service Ceiling'}
+                value={`${airframeSpecs.serviceCeilingFt.toLocaleString()} ft`}
+              />
+              <SpecRow
+                label={isDevelopmentProgram ? 'Maximum Range Target' : 'Max Range'}
+                value={`${airframeSpecs.maxRangeNm.toLocaleString()} NM`}
+              />
+              <SpecRow label="Wingspan" value={airframeSpecs.wingspanM == null ? 'Not published' : `${airframeSpecs.wingspanM} m`} />
+              <SpecRow label="MTOW" value={airframeSpecs.maxTakeoffWeightLbs == null ? 'Not published' : `${airframeSpecs.maxTakeoffWeightLbs.toLocaleString()} lbs`} />
+              <SpecRow label="Stall Speed" value={airframeSpecs.stallSpeedKts == null ? 'Not published' : `${airframeSpecs.stallSpeedKts} kts`} />
+              <SpecRow label="L/D Ratio" value={airframeSpecs.liftToDragRatio == null ? 'Not published' : airframeSpecs.liftToDragRatio.toFixed(1)} />
             </div>
           </div>
         </div>
@@ -142,7 +153,7 @@ export function SpecAccordions({
             aria-expanded={openSection === 'aerodynamics'}
           >
             <div className="p-4 pb-6">
-              <SpecRow label="Lift-to-Drag Ratio" value={aerodynamics.liftToDragRatio.toFixed(1)} />
+              <SpecRow label="Lift-to-Drag Ratio" value={aerodynamics.liftToDragRatio == null ? 'Not published' : aerodynamics.liftToDragRatio.toFixed(1)} />
               <div className="mt-4">
                 <p className="text-slate-300 text-sm leading-relaxed">{aerodynamics.description}</p>
               </div>

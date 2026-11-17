@@ -21,30 +21,31 @@ export function HeroBanner() {
         
         {/* Subtitle */}
         <p className="text-lg md:text-xl text-slate-300 mb-2">
-          Supersonic Concept Jet
+          Clean-Sheet Business Jet in Development
         </p>
         
         <p className="text-sm text-slate-400 mb-6 italic">
-          Phantom 3500 is a fictional concept aircraft.
+          Otto Aerospace program · manufacturer targets, not flight-tested
         </p>
 
         {/* Telemetry spec card - floating glassmorphic */}
         <div className="absolute bottom-8 left-1/2 -translate-x-1/2 md:left-auto md:translate-x-0 md:bottom-auto md:top-1/2 md:-translate-y-1/2 md:right-20 bg-white/10 backdrop-blur-md border border-white/20 rounded-xl p-4 shadow-lg animate-float">
           <div className="space-y-2">
             <div className="flex items-center gap-3">
-              <span className="text-accent-cyan font-mono text-sm font-bold">MACH</span>
-              <span className="text-white font-mono text-lg font-bold">2.4</span>
-              <span className="text-slate-400 text-xs">approx.</span>
+              <span className="text-accent-cyan font-mono text-sm font-bold">SPEED</span>
+              <span className="text-white font-mono text-lg font-bold">Transonic</span>
+              <span className="text-slate-400 text-xs">no Mach published</span>
             </div>
             <div className="flex items-center gap-3">
               <span className="text-accent-cyan font-mono text-sm font-bold">RANGE</span>
-              <span className="text-white font-mono text-lg font-bold">4,200 NM</span>
-              <span className="text-slate-400 text-xs">approx.</span>
+              <span className="text-white font-mono text-lg font-bold">3,500 NM</span>
+              <span className="text-slate-400 text-xs">max target</span>
             </div>
             <div className="flex items-center gap-3">
-              <span className="text-accent-cyan font-mono text-sm font-bold">CEILING</span>
+              <span className="text-accent-cyan font-mono text-sm font-bold">CRUISE</span>
               <span className="text-white font-mono text-lg font-bold">51,000 FT</span>
             </div>
+            <p className="pl-14 text-[10px] text-slate-400">3,200 NM NBAA range · 4 passengers</p>
           </div>
         </div>
       </div>

@@ -61,9 +61,9 @@ export function AircraftCard({
 
   // Format speed with approx if needed
   const formatSpeed = () => {
-    // Check if it's a Mach-derived speed (from spec: Phantom 3500, Concorde, SR-71, F-22, Bell X-1)
-    const machSpeeds = [2550, 2179, 3540, 2414, 1540];
-    if (machSpeeds.includes(topSpeedKmh)) {
+    // Phantom's 950 km/h is an approximate conversion of Otto's 590 mph reference.
+    const approximateSpeeds = [950, 2179, 3540, 2414, 1540];
+    if (approximateSpeeds.includes(topSpeedKmh)) {
       return `${topSpeedKmh} km/h (approx.)`;
     }
     return `${topSpeedKmh} km/h`;
@@ -126,7 +126,7 @@ export function AircraftCard({
 
         {isConcept && (
           <span className="absolute top-3 left-3 px-2 py-1 bg-amber-500/20 text-amber-400 text-xs font-medium rounded-full border border-amber-500/30">
-            Concept
+            In Development
           </span>
         )}
       </div>

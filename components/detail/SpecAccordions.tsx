@@ -89,10 +89,10 @@ export function SpecAccordions({
                 label={isDevelopmentProgram ? 'Maximum Range Target' : 'Max Range'}
                 value={`${airframeSpecs.maxRangeNm.toLocaleString()} NM`}
               />
-              <SpecRow label="Wingspan" value={airframeSpecs.wingspanM == null ? 'Not published' : `${airframeSpecs.wingspanM} m`} />
-              <SpecRow label="MTOW" value={airframeSpecs.maxTakeoffWeightLbs == null ? 'Not published' : `${airframeSpecs.maxTakeoffWeightLbs.toLocaleString()} lbs`} />
-              <SpecRow label="Stall Speed" value={airframeSpecs.stallSpeedKts == null ? 'Not published' : `${airframeSpecs.stallSpeedKts} kts`} />
-              <SpecRow label="L/D Ratio" value={airframeSpecs.liftToDragRatio == null ? 'Not published' : airframeSpecs.liftToDragRatio.toFixed(1)} />
+              <SpecRow label="Wingspan" value={airframeSpecs.wingspanM == null ? 'Not verified' : `${airframeSpecs.wingspanM} m`} />
+              <SpecRow label="MTOW" value={airframeSpecs.maxTakeoffWeightLbs == null ? 'Not verified' : `${airframeSpecs.maxTakeoffWeightLbs.toLocaleString()} lbs`} />
+              <SpecRow label="Stall Speed" value={airframeSpecs.stallSpeedKts == null ? 'Not verified' : `${airframeSpecs.stallSpeedKts} kts`} />
+              <SpecRow label="L/D Ratio" value={airframeSpecs.liftToDragRatio == null ? 'Not verified' : airframeSpecs.liftToDragRatio.toFixed(1)} />
             </div>
           </div>
         </div>
@@ -153,7 +153,7 @@ export function SpecAccordions({
             aria-expanded={openSection === 'aerodynamics'}
           >
             <div className="p-4 pb-6">
-              <SpecRow label="Lift-to-Drag Ratio" value={aerodynamics.liftToDragRatio == null ? 'Not published' : aerodynamics.liftToDragRatio.toFixed(1)} />
+              <SpecRow label="Lift-to-Drag Ratio" value={aerodynamics.liftToDragRatio == null ? 'Not verified' : aerodynamics.liftToDragRatio.toFixed(1)} />
               <div className="mt-4">
                 <p className="text-slate-300 text-sm leading-relaxed">{aerodynamics.description}</p>
               </div>

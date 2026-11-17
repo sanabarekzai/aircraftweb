@@ -132,7 +132,7 @@ export function FeaturedAircraft() {
         
         {aircraft.isConcept && (
           <span className="absolute top-3 left-3 px-2 py-1 bg-amber-500/20 text-amber-400 text-xs font-medium rounded-full border border-amber-500/30">
-            In Development
+            {aircraft.slug === 'phantom-3500' ? 'In Development' : 'Concept'}
           </span>
         )}
       </div>
@@ -148,7 +148,7 @@ export function FeaturedAircraft() {
         <h2 className="text-lg text-slate-200 mb-2">{aircraft.name}</h2>
         
         <div className="flex items-center justify-between text-sm">
-          <div className="text-slate-300">{formatSpeed(aircraft.topSpeedKmh)}</div>
+          <div className="text-slate-300">{aircraft.slug === 'phantom-3500' ? '≈950 km/h (published target reference)' : formatSpeed(aircraft.topSpeedKmh)}</div>
           <Link
             href={`/fleet/${aircraft.slug}`}
             className="text-accent-cyan hover:text-cyan-300 transition-colors font-medium"

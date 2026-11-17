@@ -1,0 +1,1 @@
+- [Aircraft fact checking](aircraft-fact-checking.md) — the supplied spec contains fictional Phantom data; use manufacturer sources for real-world claims.

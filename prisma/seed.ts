@@ -68,6 +68,14 @@ async function main() {
       },
     });
 
+    // Remove the superseded fictional/supersonic labels from this real program.
+    if (aircraft.slug === 'phantom-3500') {
+      await prisma.aircraft.update({
+        where: { id: createdAircraft.id },
+        data: { tags: { disconnect: ['Concept', 'Supersonic', 'Experimental'].map((name) => ({ name })) } },
+      });
+    }
+
     // Seed tags for this aircraft
     for (const tagName of aircraft.tags) {
       const tag = await prisma.tag.findUnique({ where: { name: tagName } });

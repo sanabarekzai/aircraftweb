@@ -13,7 +13,7 @@
     "maxTakeoffWeightLbs": null,
     "stallSpeedKts": null,
     "liftToDragRatio": null,
-    "engineType": "Not publicly announced",
+    "engineType": "Williams International FJ44-4 QPM turbofan (selected powerplant)",
     "description": "The Phantom 3500 is Otto Aerospace's clean-sheet business jet program in development, not a fictional aircraft. Otto describes its speed as transonic and publishes a 3,500 NM maximum range (3,200 NM NBAA range with four passengers) and 51,000 ft cruise altitude. A 2025 Otto launch release cites 590 mph, approximately 950 km/h, as a speed reference; the manufacturer has not published a Mach number. These are program targets, not flight-tested performance. Otto completed preliminary design review in May 2026 and targets first flight in 2027 and entry into service in 2030.",
     "flightControlsDescription": "Otto Aerospace has not publicly disclosed the production flight-control system.",
     "youtubeId": "TODO_VERIFY_phantom_3500",

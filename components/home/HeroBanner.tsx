@@ -7,7 +7,7 @@ export function HeroBanner() {
       {/* eslint-disable-next-line @next/next/no-img-element */}
       <img
         src="/aircraft/phantom-3500.png"
-        alt="Phantom 3500 concept aircraft flying over mountains"
+        alt="Artist's rendering of the Phantom 3500 above mountains"
         className="absolute inset-0 h-full w-full object-cover object-center"
       />
       <div className="absolute inset-0 bg-gradient-to-r from-slate-950/60 via-slate-950/30 to-slate-950/55" />
@@ -27,6 +27,9 @@ export function HeroBanner() {
         <p className="text-sm text-slate-400 mb-6 italic">
           Otto Aerospace program · manufacturer targets, not flight-tested
         </p>
+        <a href="https://ottoaerospace.com/aircraft/" target="_blank" rel="noopener noreferrer" className="text-xs text-cyan-200 underline">
+          Source: Otto Aerospace
+        </a>
 
         {/* Telemetry spec card - floating glassmorphic */}
         <div className="absolute bottom-8 left-1/2 -translate-x-1/2 md:left-auto md:translate-x-0 md:bottom-auto md:top-1/2 md:-translate-y-1/2 md:right-20 bg-white/10 backdrop-blur-md border border-white/20 rounded-xl p-4 shadow-lg animate-float">

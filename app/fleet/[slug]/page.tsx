@@ -125,7 +125,7 @@ export default async function AircraftDetailPage({
                   <>
                     <span className="text-slate-500">&bull;</span>
                     <span className="text-xs bg-amber-500/20 text-amber-400 px-2 py-0.5 rounded-full">
-                      In Development
+                      {aircraft.slug === 'phantom-3500' ? 'In Development' : 'Concept'}
                     </span>
                   </>
                 )}
@@ -148,6 +148,14 @@ export default async function AircraftDetailPage({
 
           {/* Description */}
           <p className="text-slate-300 mt-4 max-w-3xl">{aircraft.description}</p>
+          {aircraft.slug === 'phantom-3500' && (
+            <p className="mt-3 text-sm text-accent-cyan flex flex-wrap gap-4">
+              <a href="https://ottoaerospace.com/aircraft/" target="_blank" rel="noopener noreferrer" className="underline">Manufacturer specifications</a>
+              <a href="https://ottoaerospace.com/news/otto-aerospace-launches-phantom-3500-aircraft-at-up.summit/" target="_blank" rel="noopener noreferrer" className="underline">590 mph speed reference</a>
+              <a href="https://ottoaerospace.com/news/otto-aviation-partners-with-williams-international-for-the-phantom-3500-program/" target="_blank" rel="noopener noreferrer" className="underline">Engine selection</a>
+              <a href="https://ottoaerospace.com/news/otto-aerospace-phantom-3500-clears-preliminary-design-review/" target="_blank" rel="noopener noreferrer" className="underline">Program status</a>
+            </p>
+          )}
         </div>
 
         {/* Media Viewer */}
@@ -155,7 +163,7 @@ export default async function AircraftDetailPage({
 
         {/* Specifications */}
         <SpecAccordions
-          isDevelopmentProgram={aircraft.isConcept}
+          isDevelopmentProgram={aircraft.slug === 'phantom-3500'}
           airframeSpecs={{
             topSpeedKmh: aircraft.topSpeedKmh,
             serviceCeilingFt: aircraft.serviceCeilingFt,

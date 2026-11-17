@@ -45,8 +45,8 @@ export function TopSpeedsLeaderboard() {
   }, []);
 
   const formatSpeed = (speed: number) => {
-    // Mach-derived speeds from spec
-    const machSpeeds = [3540, 2550, 2414, 2179, 1540];
+    // Approximate conversions from published speed references.
+    const machSpeeds = [3540, 950, 2414, 2179, 1540];
     if (machSpeeds.includes(speed)) {
       return `${speed} km/h (approx.)`;
     }
@@ -106,7 +106,7 @@ export function TopSpeedsLeaderboard() {
             
             <div className="text-right">
               <p className="text-white font-mono font-bold">{formatSpeed(a.topSpeedKmh)}</p>
-              <p className="text-xs text-slate-400">Max Speed</p>
+              <p className="text-xs text-slate-400">{a.slug === 'phantom-3500' ? 'Published speed reference' : 'Max Speed'}</p>
             </div>
           </Link>
         ))}

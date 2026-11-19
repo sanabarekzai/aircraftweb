@@ -6,6 +6,7 @@ import { MediaViewer } from '@/components/detail/MediaViewer';
 import { SpecAccordions } from '@/components/detail/SpecAccordions';
 import { RatingWidget } from '@/components/detail/RatingWidget';
 import { NotesModule } from '@/components/detail/NotesModule';
+import { ReviewsModule } from '@/components/detail/ReviewsModule';
 import { FavoriteButton } from '@/components/detail/FavoriteButton';
 import Link from 'next/link';
 import { useAuth } from '@/context/AuthContext';
@@ -268,6 +269,9 @@ export default function AircraftDetailPage({
 
         {/* Notes Module */}
         <NotesModule aircraftId={aircraft.id} />
+
+        {/* Reviews Module */}
+        <ReviewsModule aircraftId={aircraft.id} />
 
         {/* Specifications */}
         <SpecAccordions

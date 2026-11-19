@@ -11,7 +11,7 @@ export async function GET() {
     const sessionOr401 = await getSessionOr401();
     if (sessionOr401 instanceof NextResponse) return sessionOr401;
     
-    const session = sessionOr401 as { user: SessionData['user'] };
+    const session = sessionOr401 as { user: NonNullable<SessionData['user']> };
 
     // Get user data
     const user = await prisma.user.findUnique({

@@ -1,4 +1,5 @@
 import { NextResponse } from 'next/server';
+import { Prisma, Category, Era } from '@prisma/client';
 import { prisma } from '@/lib/prisma';
 import { internalError } from '@/lib/api-helpers';
 
@@ -17,7 +18,7 @@ export async function GET(request: Request) {
     const tag = searchParams.get('tag');
 
     // Build where clause
-    const where: any = {};
+    const where: Prisma.AircraftWhereInput = {};
 
     if (query) {
       where.name = {
@@ -27,32 +28,22 @@ export async function GET(request: Request) {
     }
 
     if (category && category !== 'ALL') {
-      where.category = category;
+      where.category = category as Category;
     }
 
     if (era && era !== 'ALL') {
-      where.era = era;
+      where.era = era as Era;
     }
 
-    if (minSpeed) {
-      where.topSpeedKmh = {
-        ...where.topSpeedKmh,
-        gte: parseInt(minSpeed),
-      };
-    }
-
-    if (maxSpeed) {
-      where.topSpeedKmh = {
-        ...where.topSpeedKmh,
-        lte: parseInt(maxSpeed),
-      };
+    const topSpeedFilter: Prisma.FloatFilter<'Aircraft'> = {};
+    if (minSpeed) topSpeedFilter.gte = parseInt(minSpeed);
+    if (maxSpeed) topSpeedFilter.lte = parseInt(maxSpeed);
+    if (minSpeed || maxSpeed) {
+      where.topSpeedKmh = topSpeedFilter;
     }
 
     if (minRange) {
-      where.maxRangeNm = {
-        ...where.maxRangeNm,
-        gte: parseInt(minRange),
-      };
+      where.maxRangeNm = { gte: parseInt(minRange) };
     }
 
     // Handle tag filter - need to filter through tags relation

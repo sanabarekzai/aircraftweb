@@ -1,5 +1,7 @@
 'use client';
 
+import { aircraftSpeedLabel } from '@/lib/aircraft-spec-notes';
+
 import { useState, useEffect } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import Link from 'next/link';
@@ -11,8 +13,8 @@ interface Aircraft {
   slug: string;
   name: string;
   category: string;
-  topSpeedKmh: number;
-  maxRangeNm: number;
+  topSpeedKmh: number | null;
+  maxRangeNm: number | null;
   images: { url: string }[];
 }
 
@@ -214,11 +216,11 @@ export default function BookPage() {
               <div className="grid grid-cols-2 gap-4 text-sm">
                 <div>
                   <span className="text-slate-500">Top Speed:</span>
-                  <span className="text-white ml-2">{aircraft.topSpeedKmh} km/h</span>
+                  <span className="text-white ml-2">{aircraftSpeedLabel(aircraft.slug, aircraft.topSpeedKmh)}</span>
                 </div>
                 <div>
                   <span className="text-slate-500">Range:</span>
-                  <span className="text-white ml-2">{aircraft.maxRangeNm} nm</span>
+                  <span className="text-white ml-2">{aircraft.maxRangeNm == null ? 'Not disclosed' : `${aircraft.maxRangeNm} nm`}</span>
                 </div>
               </div>
             </div>

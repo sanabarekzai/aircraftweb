@@ -1,0 +1,147 @@
+[
+  {
+    "slug": "archer-midnight",
+    "name": "Archer Midnight",
+    "isConcept": true,
+    "releaseYear": null,
+    "category": "EXPERIMENTAL",
+    "era": "MODERN",
+    "topSpeedKmh": 241.4,
+    "serviceCeilingFt": null,
+    "maxRangeNm": 86.9,
+    "wingspanM": null,
+    "maxTakeoffWeightLbs": null,
+    "stallSpeedKts": null,
+    "liftToDragRatio": null,
+    "engineType": "Battery-electric distributed propulsion",
+    "description": "Archer Midnight is a real piloted electric vertical takeoff and landing (eVTOL) air-taxi development program, designed for a pilot and four passengers. Published design targets are up to 150 mph (approximately 241 km/h) and 100 statute miles (approximately 87 NM) maximum range, optimized for back-to-back trips of 20–50 miles. These are manufacturer targets, not a claim of certified performance. Service ceiling and other unverified figures are intentionally omitted. Source: https://www.archer.com/aircraft",
+    "flightControlsDescription": "Distributed electric propulsion supports vertical flight and wing-borne cruise. Electronic flight controls coordinate the aircraft's lift and propulsion systems; detailed control laws are not reproduced here.",
+    "youtubeId": "",
+    "schematicUrl": null,
+    "tags": ["In Development", "eVTOL", "Electric", "Air Taxi"],
+    "images": [
+      {
+        "url": "/aircraft/archer-midnight.jpg",
+        "caption": "Archer Midnight rendering supplied by the project owner",
+        "source": "Provided by project owner",
+        "license": "User-provided; rights not independently verified"
+      }
+    ]
+  },
+  {
+    "slug": "electra-el9",
+    "name": "Electra EL9",
+    "isConcept": true,
+    "releaseYear": null,
+    "category": "EXPERIMENTAL",
+    "era": "MODERN",
+    "topSpeedKmh": null,
+    "serviceCeilingFt": null,
+    "maxRangeNm": 1100,
+    "wingspanM": null,
+    "maxTakeoffWeightLbs": null,
+    "stallSpeedKts": null,
+    "liftToDragRatio": null,
+    "engineType": "Hybrid-electric turbogenerator with eight distributed electric motors",
+    "description": "The Electra EL9 is a nine-passenger hybrid-electric ultra-short takeoff and landing aircraft in development. It is distinct from the two-seat EL2 Goldfinch technology demonstrator that has flight-tested Electra's blown-lift technology. This image depicts the EL9 design, not the EL2. Published EL9 targets include 175 KTAS cruise (approximately 324 km/h), 150 ft takeoff/landing ground roll, 330 NM carrying nine passengers with baggage or 3,000 lb of cargo, and 1,100 NM maximum ferry range with IFR reserves. The listed range is ferry range, not full-payload range; cruise speed is not maximum speed. Sources: https://electra.aero/technology and https://www.electra.aero/news/electra-reveals-design-for-el9-ultra-short-hybrid-electric-aircraft",
+    "flightControlsDescription": "Electra describes triplex-redundant fly-by-wire controls coordinating flight-control surfaces and eight electric motors. Blown lift accelerates airflow over the wing and flaps for very low-speed, short-field operations. EL9 targets must not be attributed to the smaller EL2 demonstrator.",
+    "youtubeId": "",
+    "schematicUrl": null,
+    "tags": ["In Development", "Hybrid Electric", "Ultra Short", "EL2 Technology"],
+    "images": [
+      {
+        "url": "/aircraft/electra-el9.jpg",
+        "caption": "Electra EL9 design rendering, not the EL2 Goldfinch demonstrator",
+        "source": "Provided by project owner",
+        "license": "User-provided; rights not independently verified"
+      }
+    ]
+  },
+  {
+    "slug": "pivotal-helix",
+    "name": "Pivotal Helix",
+    "isConcept": false,
+    "releaseYear": null,
+    "category": "GENERAL_AVIATION",
+    "era": "MODERN",
+    "topSpeedKmh": null,
+    "serviceCeilingFt": null,
+    "maxRangeNm": 17.4,
+    "wingspanM": null,
+    "maxTakeoffWeightLbs": 568,
+    "stallSpeedKts": null,
+    "liftToDragRatio": null,
+    "engineType": "Battery-electric distributed propulsion; tilt-aircraft configuration",
+    "description": "Pivotal Helix is a real single-seat all-electric personal eVTOL, not a fictional concept. The entire airframe tilts to transition between vertical and forward flight rather than tilting individual wings or rotors. Pivotal publishes 55 knots cruise (approximately 102 km/h), 20 minutes maximum electric endurance, 20 statute miles (approximately 17.4 NM) maximum electric range, 568 lb maximum gross takeoff weight and 220 lb payload. Cruise is not a verified top speed; an operating-height restriction must not be confused with a service ceiling. Pivotal markets Helix for U.S. Part 103 ultralight operations, subject to operating restrictions and required manufacturer training; no pilot's license does not mean unrestricted flight. Source: https://www.pivotal.aero/helix",
+    "flightControlsDescription": "A single control stick and touchscreen interface work with automated flight systems. Pivotal describes triple-redundant failsafe systems, automated takeoff and landing, and an aircraft parachute for rare emergencies.",
+    "youtubeId": "",
+    "schematicUrl": null,
+    "tags": ["eVTOL", "Electric", "Ultralight", "Personal Aircraft"],
+    "images": [
+      {
+        "url": "/aircraft/pivotal-helix.jpg",
+        "caption": "Pivotal Helix image supplied by the project owner",
+        "source": "Provided by project owner",
+        "license": "User-provided; rights not independently verified"
+      }
+    ]
+  },
+  {
+    "slug": "b-21-raider",
+    "name": "Northrop Grumman B-21 Raider",
+    "isConcept": true,
+    "releaseYear": null,
+    "category": "MILITARY",
+    "era": "MODERN",
+    "topSpeedKmh": null,
+    "serviceCeilingFt": null,
+    "maxRangeNm": null,
+    "wingspanM": null,
+    "maxTakeoffWeightLbs": null,
+    "stallSpeedKts": null,
+    "liftToDragRatio": null,
+    "engineType": "Jet propulsion; detailed specifications not publicly disclosed here",
+    "description": "The Northrop Grumman B-21 Raider is a real U.S. Air Force penetrating-strike stealth bomber program, not a fictional concept. It is designed for conventional and nuclear missions with an open-systems architecture. Its public unveiling took place in December 2022. The cited official Air Force fact sheet does not disclose numerical maximum speed, range, service ceiling, wingspan or takeoff weight; those fields remain unknown rather than copying speculative estimates or B-2 figures. No operational service-entry date is asserted here. Source: https://www.af.mil/About-Us/Fact-Sheets/Display/article/2682973/b-21-raider/",
+    "flightControlsDescription": "A flying-wing stealth configuration requires coordinated flight control. Detailed B-21 flight-control architecture and aerodynamic performance are not publicly verified in the cited fact sheet.",
+    "youtubeId": "",
+    "schematicUrl": null,
+    "tags": ["In Development", "Stealth", "Bomber", "Military"],
+    "images": [
+      {
+        "url": "/aircraft/b-21-raider.jpg",
+        "caption": "Owner-supplied illustrative image labeled B-21 Raider; exact image identity not independently verified",
+        "source": "Provided by project owner",
+        "license": "User-provided; rights not independently verified"
+      }
+    ]
+  },
+  {
+    "slug": "mq-25-stingray",
+    "name": "Boeing MQ-25 Stingray",
+    "isConcept": true,
+    "releaseYear": null,
+    "category": "MILITARY",
+    "era": "MODERN",
+    "topSpeedKmh": null,
+    "serviceCeilingFt": null,
+    "maxRangeNm": null,
+    "wingspanM": 22.86,
+    "maxTakeoffWeightLbs": null,
+    "stallSpeedKts": null,
+    "liftToDragRatio": null,
+    "engineType": "Rolls-Royce AE 3700N turbofan",
+    "description": "Boeing's MQ-25A Stingray is a real U.S. Navy carrier-based unmanned aerial-refueling aircraft program. The Navy lists aerial refueling as its primary function, with intelligence, surveillance and reconnaissance capabilities also described. The T1 test asset first flew in 2019 and demonstrated aerial refueling in 2021. Official dimensions include a 75 ft (22.86 m) wingspan with wings spread, 31.3 ft folded span, and 51 ft length. The cited Navy fact file does not publish maximum speed, service ceiling or maximum aircraft range, so those values remain unknown. Refueling mission radius and fuel offload are not interchangeable with maximum range. Source: https://www.navy.mil/Resources/Fact-Files/Display-FactFiles/Article/2160662/mq-25a-stingray/",
+    "flightControlsDescription": "An unmanned air vehicle operated with the Unmanned Carrier Aviation Mission Control System. Folding wings support carrier handling; precise control-system details are not inferred from images.",
+    "youtubeId": "",
+    "schematicUrl": null,
+    "tags": ["In Development", "Unmanned", "Aerial Refueling", "Carrier Based"],
+    "images": [
+      {
+        "url": "/aircraft/mq-25-stingray.jpg",
+        "caption": "Boeing MQ-25 Stingray illustration supplied by the project owner",
+        "source": "Provided by project owner",
+        "license": "User-provided; rights not independently verified"
+      }
+    ]
+  }
+]

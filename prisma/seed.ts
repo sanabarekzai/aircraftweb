@@ -1,5 +1,10 @@
 import { PrismaClient, type Category, type Era } from '@prisma/client';
-import aircraftData from '../data/seed-aircraft.json';
+import existingAircraft from '../data/seed-aircraft.json';
+import newAircraft from '../data/new-aircraft.json';
+
+const aircraftData = process.argv.includes('--new-only')
+  ? newAircraft
+  : [...existingAircraft, ...newAircraft];
 
 const prisma = new PrismaClient();
 

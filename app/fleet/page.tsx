@@ -17,7 +17,7 @@ interface Aircraft {
   name: string;
   isConcept: boolean;
   era: string;
-  topSpeedKmh: number;
+  topSpeedKmh: number | null;
   coverImage: AircraftImage | null;
   tags: string[];
 }

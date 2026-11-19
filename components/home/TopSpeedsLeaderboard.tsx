@@ -1,5 +1,7 @@
 'use client';
 
+import { aircraftSpeedLabel } from '@/lib/aircraft-spec-notes';
+
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 
@@ -7,7 +9,7 @@ interface Aircraft {
   id: string;
   slug: string;
   name: string;
-  topSpeedKmh: number;
+  topSpeedKmh: number | null;
 }
 
 interface AircraftResponse {
@@ -44,7 +46,8 @@ export function TopSpeedsLeaderboard() {
     fetchTopSpeeds();
   }, []);
 
-  const formatSpeed = (speed: number) => {
+  const formatSpeed = (speed: number | null) => {
+    if (speed == null) return 'Not disclosed';
     // Mach-derived speeds from spec
     const machSpeeds = [3540, 2550, 2414, 2179, 1540];
     if (machSpeeds.includes(speed)) {
@@ -105,7 +108,7 @@ export function TopSpeedsLeaderboard() {
             </div>
             
             <div className="text-right">
-              <p className="text-white font-mono font-bold">{formatSpeed(a.topSpeedKmh)}</p>
+              <p className="text-white font-mono font-bold">{['phantom-3500', 'archer-midnight'].includes(a.slug) ? aircraftSpeedLabel(a.slug, a.topSpeedKmh) : formatSpeed(a.topSpeedKmh)}</p>
               <p className="text-xs text-slate-400">Max Speed</p>
             </div>
           </Link>

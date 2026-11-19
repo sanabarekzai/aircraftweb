@@ -1,5 +1,7 @@
 'use client';
 
+import { aircraftSpeedLabel } from '@/lib/aircraft-spec-notes';
+
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 
@@ -13,9 +15,9 @@ interface Aircraft {
   name: string;
   isConcept: boolean;
   era: string;
-  topSpeedKmh: number;
-  serviceCeilingFt: number;
-  maxRangeNm: number;
+  topSpeedKmh: number | null;
+  serviceCeilingFt: number | null;
+  maxRangeNm: number | null;
   coverImage: AircraftImage | null;
   tags: string[];
 }
@@ -64,7 +66,8 @@ export function FeaturedAircraft() {
     return eraMap[era] || era;
   };
 
-  const formatSpeed = (speed: number) => {
+  const formatSpeed = (speed: number | null) => {
+    if (speed == null) return 'Top speed not disclosed';
     const machSpeeds = [2550, 2179, 3540, 2414, 1540];
     if (machSpeeds.includes(speed)) {
       return `${speed} km/h (approx.)`;
@@ -132,7 +135,7 @@ export function FeaturedAircraft() {
         
         {aircraft.isConcept && (
           <span className="absolute top-3 left-3 px-2 py-1 bg-amber-500/20 text-amber-400 text-xs font-medium rounded-full border border-amber-500/30">
-            {aircraft.slug === 'phantom-3500' ? 'In Development' : 'Concept'}
+            {['phantom-3500', 'archer-midnight', 'electra-el9', 'b-21-raider', 'mq-25-stingray'].includes(aircraft.slug) ? 'In Development' : 'Concept'}
           </span>
         )}
       </div>
@@ -148,7 +151,7 @@ export function FeaturedAircraft() {
         <h2 className="text-lg text-slate-200 mb-2">{aircraft.name}</h2>
         
         <div className="flex items-center justify-between text-sm">
-          <div className="text-slate-300">{aircraft.slug === 'phantom-3500' ? '≈950 km/h (target reference)' : formatSpeed(aircraft.topSpeedKmh)}</div>
+          <div className="text-slate-300">{['phantom-3500', 'archer-midnight', 'electra-el9', 'pivotal-helix'].includes(aircraft.slug) ? aircraftSpeedLabel(aircraft.slug, aircraft.topSpeedKmh) : formatSpeed(aircraft.topSpeedKmh)}</div>
           <Link
             href={`/fleet/${aircraft.slug}`}
             className="text-accent-cyan hover:text-cyan-300 transition-colors font-medium"

@@ -27,9 +27,9 @@ interface AircraftDetail {
   category: string;
   era: string;
   releaseYear: number | null;
-  topSpeedKmh: number;
-  serviceCeilingFt: number;
-  maxRangeNm: number;
+  topSpeedKmh: number | null;
+  serviceCeilingFt: number | null;
+  maxRangeNm: number | null;
   wingspanM: number | null;
   maxTakeoffWeightLbs: number | null;
   stallSpeedKts: number | null;
@@ -218,7 +218,7 @@ export default function AircraftDetailPage({
                   <>
                     <span className="text-slate-500">&bull;</span>
                     <span className="text-xs bg-amber-500/20 text-amber-400 px-2 py-0.5 rounded-full">
-                      {aircraft.slug === 'phantom-3500' ? 'In Development' : 'Concept'}
+                      {['phantom-3500', 'archer-midnight', 'electra-el9', 'b-21-raider', 'mq-25-stingray'].includes(aircraft.slug) ? 'In Development' : 'Concept'}
                     </span>
                   </>
                 )}
@@ -271,6 +271,7 @@ export default function AircraftDetailPage({
 
         {/* Specifications */}
         <SpecAccordions
+          slug={aircraft.slug}
           isDevelopmentProgram={aircraft.slug === 'phantom-3500'}
           airframeSpecs={{
             topSpeedKmh: aircraft.topSpeedKmh,

@@ -45,9 +45,9 @@ model Aircraft {
   category                   Category
   era                        Era
   releaseYear                Int?
-  topSpeedKmh                Float
-  serviceCeilingFt           Float
-  maxRangeNm                 Float
+  topSpeedKmh                Float?
+  serviceCeilingFt           Float?
+  maxRangeNm                 Float?
   wingspanM                  Float?
   maxTakeoffWeightLbs        Float?
   stallSpeedKts              Float?

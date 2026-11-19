@@ -10,8 +10,8 @@ interface Aircraft {
   category: string;
   era: string;
   engineType: string;
-  topSpeedKmh: number;
-  serviceCeilingFt: number;
+  topSpeedKmh: number | null;
+  serviceCeilingFt: number | null;
   wingspanM: number | null;
   maxTakeoffWeightLbs: number | null;
   stallSpeedKts: number | null;

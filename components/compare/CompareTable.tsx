@@ -9,8 +9,8 @@ interface AircraftSpecs {
   category: string;
   era: string;
   engineType: string;
-  topSpeedKmh: number;
-  serviceCeilingFt: number;
+  topSpeedKmh: number | null;
+  serviceCeilingFt: number | null;
   wingspanM: number | null;
   maxTakeoffWeightLbs: number | null;
   stallSpeedKts: number | null;
@@ -58,9 +58,9 @@ export function CompareTable({ aircraftA, aircraftB }: CompareTableProps) {
   }
 
   // Calculate max values for progress bars
-  const maxSpeed = Math.max(aircraftA.topSpeedKmh, aircraftB.topSpeedKmh);
+  const maxSpeed = Math.max(aircraftA.topSpeedKmh ?? 0, aircraftB.topSpeedKmh ?? 0);
   const maxWingspan = Math.max(aircraftA.wingspanM ?? 0, aircraftB.wingspanM ?? 0);
-  const maxCeiling = Math.max(aircraftA.serviceCeilingFt, aircraftB.serviceCeilingFt);
+  const maxCeiling = Math.max(aircraftA.serviceCeilingFt ?? 0, aircraftB.serviceCeilingFt ?? 0);
 
   // Format weights
   const formatWeight = (lbs: number | null): string => {
@@ -73,6 +73,7 @@ export function CompareTable({ aircraftA, aircraftB }: CompareTableProps) {
 
   return (
     <div className="w-full">
+      <p className="text-sm text-slate-400 mb-4">Unknown figures are not ranked. Development targets are not certified performance; cruise speeds are not maximum speeds. See each aircraft’s specifications for context.</p>
       {[aircraftA, aircraftB].some((a) => a.slug === 'phantom-3500') && (
         <p className="text-sm text-amber-300 mb-4">
           Phantom 3500 values are manufacturer targets: speed is a published reference,

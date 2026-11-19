@@ -2,13 +2,15 @@
 
 import { useState } from 'react';
 import { ChevronDown, ChevronUp } from 'lucide-react';
+import { aircraftSpeedLabel, aircraftSpecNote } from '@/lib/aircraft-spec-notes';
 
 interface SpecAccordionsProps {
+  slug?: string;
   isDevelopmentProgram?: boolean;
   airframeSpecs: {
-    topSpeedKmh: number;
-    serviceCeilingFt: number;
-    maxRangeNm: number;
+    topSpeedKmh: number | null;
+    serviceCeilingFt: number | null;
+    maxRangeNm: number | null;
     wingspanM: number | null;
     maxTakeoffWeightLbs: number | null;
     stallSpeedKts: number | null;
@@ -28,6 +30,7 @@ interface SpecAccordionsProps {
 }
 
 export function SpecAccordions({
+  slug = '',
   isDevelopmentProgram = false,
   airframeSpecs,
   engineSpecs,
@@ -40,7 +43,8 @@ export function SpecAccordions({
     setOpenSection(openSection === section ? null : section);
   };
 
-  const formatSpeed = (speed: number, unit: string = 'km/h') => {
+  const formatSpeed = (speed: number | null, unit: string = 'km/h') => {
+    if (speed == null) return 'Not disclosed / not verified';
     const machSpeeds = [2550, 2179, 3540, 2414, 1540];
     if (machSpeeds.includes(speed) && unit === 'km/h') {
       return `${speed} ${unit} (approx.)`;
@@ -51,6 +55,7 @@ export function SpecAccordions({
   return (
     <div className="bg-panel rounded-lg p-6 mb-8">
       <h2 className="text-xl font-semibold text-white mb-4">Specifications</h2>
+      {aircraftSpecNote(slug) && <p className="text-sm text-amber-300 mb-4">{aircraftSpecNote(slug)}</p>}
 
       <div className="space-y-2">
         {/* Airframe Specs */}
@@ -77,9 +82,9 @@ export function SpecAccordions({
             aria-expanded={openSection === 'airframe'}
           >
             <div className="p-4 pb-6 grid grid-cols-1 md:grid-cols-2 gap-4">
-              <SpecRow label={isDevelopmentProgram ? 'Published Speed Reference' : 'Top Speed'} value={isDevelopmentProgram ? '590 mph ≈ 950 km/h (target reference)' : formatSpeed(airframeSpecs.topSpeedKmh, 'km/h')} />
-              <SpecRow label={isDevelopmentProgram ? 'Cruise Altitude' : 'Service Ceiling'} value={`${airframeSpecs.serviceCeilingFt.toLocaleString()} ft`} />
-              <SpecRow label={isDevelopmentProgram ? 'Maximum Range Target' : 'Max Range'} value={`${airframeSpecs.maxRangeNm.toLocaleString()} NM`} />
+              <SpecRow label={isDevelopmentProgram ? 'Published Speed Reference' : ['electra-el9', 'pivotal-helix'].includes(slug) ? 'Cruise Speed' : slug === 'archer-midnight' ? 'Target Top Speed' : 'Top Speed'} value={['phantom-3500', 'archer-midnight', 'electra-el9', 'pivotal-helix'].includes(slug) ? aircraftSpeedLabel(slug, airframeSpecs.topSpeedKmh) : formatSpeed(airframeSpecs.topSpeedKmh)} />
+              <SpecRow label={isDevelopmentProgram ? 'Cruise Altitude' : 'Service Ceiling'} value={airframeSpecs.serviceCeilingFt == null ? 'Not disclosed / not verified' : `${airframeSpecs.serviceCeilingFt.toLocaleString()} ft`} />
+              <SpecRow label={isDevelopmentProgram || slug === 'archer-midnight' ? 'Maximum Range Target' : slug === 'electra-el9' ? 'Maximum Ferry Range Target' : 'Max Range'} value={airframeSpecs.maxRangeNm == null ? 'Not disclosed / not verified' : `${airframeSpecs.maxRangeNm.toLocaleString()} NM`} />
               <SpecRow label="Wingspan" value={airframeSpecs.wingspanM == null ? 'Not verified' : `${airframeSpecs.wingspanM} m`} />
               <SpecRow label="MTOW" value={airframeSpecs.maxTakeoffWeightLbs == null ? 'Not verified' : `${airframeSpecs.maxTakeoffWeightLbs.toLocaleString()} lbs`} />
               <SpecRow label="Stall Speed" value={airframeSpecs.stallSpeedKts == null ? 'Not verified' : `${airframeSpecs.stallSpeedKts} kts`} />

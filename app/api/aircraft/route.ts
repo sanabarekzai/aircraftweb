@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
 import { z } from 'zod';
-import type { Category, Era } from '@prisma/client';
+import type { Category, Era, Prisma } from '@prisma/client';
 
 const querySchema = z.object({
   search: z.string().optional(),
@@ -29,9 +29,9 @@ interface AircraftWithRelations {
   category: Category;
   era: Era;
   releaseYear: number | null;
-  topSpeedKmh: number;
-  serviceCeilingFt: number;
-  maxRangeNm: number;
+  topSpeedKmh: number | null;
+  serviceCeilingFt: number | null;
+  maxRangeNm: number | null;
   wingspanM: number | null;
   maxTakeoffWeightLbs: number | null;
   stallSpeedKts: number | null;
@@ -86,10 +86,10 @@ export async function GET(request: Request) {
     }
 
     // Build orderBy clause
-    const orderBy: Array<{ [key: string]: 'asc' | 'desc' }> = [];
+    const orderBy: Prisma.AircraftOrderByWithRelationInput[] = [];
     switch (sort) {
       case 'speed_desc':
-        orderBy.push({ topSpeedKmh: 'desc' });
+        orderBy.push({ topSpeedKmh: { sort: 'desc', nulls: 'last' } });
         break;
       case 'name_asc':
         orderBy.push({ name: 'asc' });
@@ -100,10 +100,10 @@ export async function GET(request: Request) {
         orderBy.push({ name: 'asc' });
         break;
       case 'range_desc':
-        orderBy.push({ maxRangeNm: 'desc' });
+        orderBy.push({ maxRangeNm: { sort: 'desc', nulls: 'last' } });
         break;
       case 'ceiling_desc':
-        orderBy.push({ serviceCeilingFt: 'desc' });
+        orderBy.push({ serviceCeilingFt: { sort: 'desc', nulls: 'last' } });
         break;
       default:
         // Default sort by name ascending

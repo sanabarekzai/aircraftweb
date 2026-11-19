@@ -84,7 +84,7 @@ export function AircraftCard({
   };
 
   return (
-    <div className="bg-panel rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-shadow duration-200 group">
+    <div className="relative bg-panel rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-shadow duration-200 group">
       <div className="relative aspect-video bg-slate-700/50">
         {coverImage && !coverImage.url.startsWith('TODO_VERIFY_') ? (
           // eslint-disable-next-line @next/next/no-img-element
@@ -116,7 +116,7 @@ export function AircraftCard({
           onClick={handleFavoriteClick}
           disabled={isLoading}
           aria-label={favorite ? 'Remove from favorites' : 'Add to favorites'}
-          className={`absolute top-3 right-3 p-2 rounded-full transition-colors focus-visible:ring-2 focus-visible:ring-accent-cyan focus-visible:outline-none ${
+          className={`absolute top-3 right-3 z-20 p-2 rounded-full transition-colors focus-visible:ring-2 focus-visible:ring-accent-cyan focus-visible:outline-none ${
             favorite
               ? 'bg-red-500/20 text-red-400 hover:bg-red-500/30'
               : 'bg-slate-700/50 text-slate-400 hover:bg-slate-600/50 hover:text-white'
@@ -138,7 +138,7 @@ export function AircraftCard({
         <div className="flex items-start justify-between mb-2">
           <Link
             href={`/fleet/${slug}`}
-            className="text-white font-semibold hover:text-accent-cyan transition-colors truncate"
+            className="text-white font-semibold hover:text-accent-cyan transition-colors truncate after:absolute after:inset-0 after:z-10 after:rounded-lg focus-visible:outline-none focus-visible:after:ring-2 focus-visible:after:ring-inset focus-visible:after:ring-accent-cyan"
           >
             {name}
           </Link>

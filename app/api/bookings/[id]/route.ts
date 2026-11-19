@@ -20,7 +20,7 @@ export async function DELETE(
     const sessionOr401 = await getSessionOr401();
     if (sessionOr401 instanceof NextResponse) return sessionOr401;
     
-    const session = sessionOr401 as { user: SessionData['user'] };
+    const session = sessionOr401 as { user: NonNullable<SessionData['user']> };
     const { id } = await params;
 
     // Find booking
@@ -59,7 +59,7 @@ export async function PUT(
     const sessionOr401 = await getSessionOr401();
     if (sessionOr401 instanceof NextResponse) return sessionOr401;
     
-    const session = sessionOr401 as { user: SessionData['user'] };
+    const session = sessionOr401 as { user: NonNullable<SessionData['user']> };
     const { id } = await params;
     const body = await request.json();
     const { startDate, endDate, notes } = body;

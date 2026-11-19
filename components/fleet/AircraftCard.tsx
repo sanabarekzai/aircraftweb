@@ -85,6 +85,11 @@ export function AircraftCard({
 
   return (
     <div className="relative bg-panel rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-shadow duration-200 group">
+      <Link
+        href={`/fleet/${slug}`}
+        aria-label={`View ${name}`}
+        className="block h-full cursor-pointer rounded-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-accent-cyan"
+      >
       <div className="relative aspect-video bg-slate-700/50">
         {coverImage && !coverImage.url.startsWith('TODO_VERIFY_') ? (
           // eslint-disable-next-line @next/next/no-img-element
@@ -112,21 +117,6 @@ export function AircraftCard({
           </div>
         )}
 
-        <button
-          onClick={handleFavoriteClick}
-          disabled={isLoading}
-          aria-label={favorite ? 'Remove from favorites' : 'Add to favorites'}
-          className={`absolute top-3 right-3 z-20 p-2 rounded-full transition-colors focus-visible:ring-2 focus-visible:ring-accent-cyan focus-visible:outline-none ${
-            favorite
-              ? 'bg-red-500/20 text-red-400 hover:bg-red-500/30'
-              : 'bg-slate-700/50 text-slate-400 hover:bg-slate-600/50 hover:text-white'
-          }`}
-        >
-          <Heart
-            className={`w-5 h-5 transition-transform ${favorite ? 'fill-current' : ''}`}
-          />
-        </button>
-
         {isConcept && (
           <span className="absolute top-3 left-3 px-2 py-1 bg-amber-500/20 text-amber-400 text-xs font-medium rounded-full border border-amber-500/30">
             {tags.includes('In Development') ? 'In Development' : 'Concept'}
@@ -136,12 +126,9 @@ export function AircraftCard({
 
       <div className="p-4">
         <div className="flex items-start justify-between mb-2">
-          <Link
-            href={`/fleet/${slug}`}
-            className="text-white font-semibold hover:text-accent-cyan transition-colors truncate after:absolute after:inset-0 after:z-10 after:rounded-lg focus-visible:outline-none focus-visible:after:ring-2 focus-visible:after:ring-inset focus-visible:after:ring-accent-cyan"
-          >
+          <h2 className="text-white font-semibold group-hover:text-accent-cyan transition-colors truncate">
             {name}
-          </Link>
+          </h2>
           <span className="text-xs text-slate-400 bg-slate-700/50 px-2 py-0.5 rounded-full">
             {formatEra()}
           </span>
@@ -164,6 +151,20 @@ export function AircraftCard({
           </div>
         </div>
       </div>
+      </Link>
+      <button
+        type="button"
+        onClick={handleFavoriteClick}
+        disabled={isLoading}
+        aria-label={favorite ? 'Remove from favorites' : 'Add to favorites'}
+        className={`absolute top-3 right-3 z-20 p-2 rounded-full transition-colors focus-visible:ring-2 focus-visible:ring-accent-cyan focus-visible:outline-none ${
+          favorite
+            ? 'bg-red-500/20 text-red-400 hover:bg-red-500/30'
+            : 'bg-slate-700/50 text-slate-400 hover:bg-slate-600/50 hover:text-white'
+        }`}
+      >
+        <Heart className={`w-5 h-5 transition-transform ${favorite ? 'fill-current' : ''}`} />
+      </button>
     </div>
   );
 }

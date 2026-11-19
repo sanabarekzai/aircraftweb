@@ -1,4 +1,4 @@
-import { PrismaClient } from '@prisma/client';
+import { PrismaClient, Category, Era } from '@prisma/client';
 import aircraftData from '../data/seed-aircraft.json';
 
 const prisma = new PrismaClient();
@@ -30,8 +30,8 @@ async function main() {
       update: {
         name: aircraft.name,
         isConcept: aircraft.isConcept,
-        category: aircraft.category as any,
-        era: aircraft.era as any,
+        category: aircraft.category as Category,
+        era: aircraft.era as Era,
         releaseYear: aircraft.releaseYear,
         topSpeedKmh: aircraft.topSpeedKmh,
         serviceCeilingFt: aircraft.serviceCeilingFt,
@@ -50,8 +50,8 @@ async function main() {
         slug: aircraft.slug,
         name: aircraft.name,
         isConcept: aircraft.isConcept,
-        category: aircraft.category as any,
-        era: aircraft.era as any,
+        category: aircraft.category as Category,
+        era: aircraft.era as Era,
         releaseYear: aircraft.releaseYear,
         topSpeedKmh: aircraft.topSpeedKmh,
         serviceCeilingFt: aircraft.serviceCeilingFt,

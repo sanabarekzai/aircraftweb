@@ -11,6 +11,8 @@ interface User {
 
 interface AuthContextType {
   user: User | null;
+  loading: boolean;
+  refreshUser: () => Promise<void>;
   login: (email: string, password: string) => Promise<void>;
   logout: () => Promise<void>;
   register: (email: string, username: string, password: string) => Promise<void>;
@@ -26,6 +28,7 @@ interface AuthProviderProps {
 
 export function AuthProvider({ children }: AuthProviderProps) {
   const [user, setUser] = useState<User | null>(null);
+  const [loading, setLoading] = useState(true);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const router = useRouter();
 
@@ -87,28 +90,33 @@ export function AuthProvider({ children }: AuthProviderProps) {
     }
   }, [router]);
 
-  // Sync user state with server on mount
-  useEffect(() => {
-    const fetchUser = async () => {
-      try {
-        const response = await fetch('/api/auth/me', {
-          credentials: 'include',
-        });
-        if (response.ok) {
-          const data = await response.json();
-          setUser(data.user);
-        }
-      } catch (error) {
-        console.error('Failed to fetch user:', error);
+  // Fetch the current user on mount and on demand
+  const refreshUser = useCallback(async () => {
+    try {
+      const response = await fetch('/api/auth/me', {
+        credentials: 'include',
+      });
+      if (response.ok) {
+        const data = await response.json();
+        setUser(data.user);
+      } else {
+        setUser(null);
       }
-    };
-    fetchUser();
+    } catch (error) {
+      console.error('Failed to fetch user:', error);
+    }
   }, []);
+
+  useEffect(() => {
+    refreshUser().finally(() => setLoading(false));
+  }, [refreshUser]);
 
   return (
     <AuthContext.Provider
       value={{
         user,
+        loading,
+        refreshUser,
         login,
         logout,
         register,

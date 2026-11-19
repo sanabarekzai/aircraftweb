@@ -25,7 +25,7 @@ export async function PUT(request: Request) {
     const sessionOr401 = await getSessionOr401();
     if (sessionOr401 instanceof NextResponse) return sessionOr401;
     
-    const session = sessionOr401 as { user: SessionData['user'] };
+    const session = sessionOr401 as { user: NonNullable<SessionData['user']> };
     const body = await request.json();
     const { username, email, currentPassword, newPassword } = updateSchema.parse(body);
 

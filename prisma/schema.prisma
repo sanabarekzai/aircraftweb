@@ -35,6 +35,7 @@ model User {
   personalNotes PersonalNote[]
   flightLogs    FlightLog[]
   bookings      Booking[]
+  reviews       Review[]
 }
 
 model Aircraft {
@@ -64,6 +65,7 @@ model Aircraft {
   personalNotes              PersonalNote[]
   flightLogs                 FlightLog[]
   bookings                   Booking[]
+  reviews                    Review[]
 
   @@index([category])
   @@index([era])
@@ -165,4 +167,34 @@ model Booking {
   @@index([startDate])
   @@index([endDate])
   @@index([status])
+}
+
+model Review {
+  id           String   @id @default(uuid())
+  userId       String
+  aircraftId   String
+  content      String   @db.Text
+  status       String   @default("PUBLISHED") // PUBLISHED, HIDDEN
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  aircraft     Aircraft @relation(fields: [aircraftId], references: [id], onDelete: Cascade)
+  reports      ReviewReport[]
+
+  @@unique([userId, aircraftId])
+  @@index([userId])
+  @@index([aircraftId])
+  @@index([status])
+}
+
+model ReviewReport {
+  id       String   @id @default(uuid())
+  reviewId String
+  userId   String
+  reason   String
+  createdAt DateTime @default(now())
+  review   Review   @relation(fields: [reviewId], references: [id], onDelete: Cascade)
+
+  @@unique([reviewId, userId])
+  @@index([reviewId])
 }

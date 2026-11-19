@@ -1,5 +1,6 @@
 'use client';
 
+import { Suspense } from 'react';
 import { useState, useEffect } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import Link from 'next/link';
@@ -17,6 +18,14 @@ interface Aircraft {
 }
 
 export default function BookPage() {
+  return (
+    <Suspense>
+      <BookPageContent />
+    </Suspense>
+  );
+}
+
+function BookPageContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const { user, loading, openAuthModal } = useAuth();

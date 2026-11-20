@@ -57,6 +57,7 @@ export async function POST(request: Request) {
       id: user.id,
       email: user.email,
       username: user.username,
+      isAdmin: user.isAdmin,
     };
     await session.save();
 
@@ -66,6 +67,7 @@ export async function POST(request: Request) {
           id: user.id,
           email: user.email,
           username: user.username,
+          isAdmin: user.isAdmin,
         },
       },
       { status: 200 }

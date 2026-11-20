@@ -38,6 +38,7 @@ export default function Navbar() {
     { href: '/bookings', label: 'Bookings' },
     { href: '/profile', label: 'Profile' },
     { href: '/settings', label: 'Settings' },
+    ...(user?.isAdmin ? [{ href: '/admin', label: 'Admin' }] : []),
   ];
 
   return (

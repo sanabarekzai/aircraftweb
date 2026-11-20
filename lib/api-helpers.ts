@@ -2,12 +2,34 @@ import { NextResponse } from 'next/server';
 import { getIronSession } from 'iron-session';
 import { cookies } from 'next/headers';
 import { sessionOptions, type SessionData } from './session';
+import { prisma } from './prisma';
 
 export async function getSessionOr401() {
   const session = await getIronSession<SessionData>(await cookies(), sessionOptions);
   if (!session.user) {
     return NextResponse.json({ error: { code: 'UNAUTHORIZED', message: 'Authentication required' } }, { status: 401 });
   }
+  return session as typeof session & { user: NonNullable<SessionData['user']> };
+}
+
+// Returns a NextResponse (401/403) or the session; isAdmin is re-checked
+// against the database on every call so promotions/revocations take effect
+// without waiting for the session cookie to expire.
+export async function getAdminSessionOr403() {
+  const session = await getIronSession<SessionData>(await cookies(), sessionOptions);
+  if (!session.user) {
+    return NextResponse.json({ error: { code: 'UNAUTHORIZED', message: 'Authentication required' } }, { status: 401 });
+  }
+
+  const user = await prisma.user.findUnique({
+    where: { id: session.user.id },
+    select: { isAdmin: true },
+  });
+
+  if (!user?.isAdmin) {
+    return NextResponse.json({ error: { code: 'FORBIDDEN', message: 'Admin access required' } }, { status: 403 });
+  }
+
   return session as typeof session & { user: NonNullable<SessionData['user']> };
 }
 

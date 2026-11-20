@@ -5,6 +5,16 @@ import Link from 'next/link';
 import { useAuth } from '@/context/AuthContext';
 import { useRouter } from 'next/navigation';
 
+interface ProfileBadge {
+  key: string;
+  name: string;
+  description: string;
+  icon: string;
+  tier: string;
+  earned: boolean;
+  earnedAt: string | null;
+}
+
 export default function ProfilePage() {
   const { user, loading } = useAuth();
   const router = useRouter();
@@ -16,6 +26,7 @@ export default function ProfilePage() {
     favoriteAircraftCount: number;
     flightLogsCount: number;
   } | null>(null);
+  const [badges, setBadges] = useState<ProfileBadge[]>([]);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
@@ -37,6 +48,7 @@ export default function ProfilePage() {
       if (response.ok) {
         const data = await response.json();
         setProfileData(data.profile);
+        setBadges(data.badges || []);
       }
     } catch (error) {
       console.error('Failed to fetch profile:', error);
@@ -90,6 +102,43 @@ export default function ProfilePage() {
                 <div className="text-slate-400 mt-2">Flight Logs</div>
               </div>
             </div>
+
+            {badges.length > 0 && (
+              <div className="border-t border-slate-700 pt-6 mb-8">
+                <div className="flex items-center justify-between mb-4">
+                  <h3 className="text-lg font-semibold">Achievements</h3>
+                  <span className="text-sm text-slate-400">
+                    {badges.filter((b) => b.earned).length} / {badges.length} earned
+                  </span>
+                </div>
+                <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
+                  {badges.map((badge) => (
+                    <div
+                      key={badge.key}
+                      title={badge.earned ? badge.description : `${badge.description} (locked)`}
+                      className={`rounded-lg p-4 text-center border transition-colors ${
+                        badge.earned
+                          ? 'bg-slate-800/50 border-amber-500/40'
+                          : 'bg-slate-900/50 border-slate-800 opacity-40'
+                      }`}
+                    >
+                      <div className={`text-3xl mb-2 ${badge.earned ? '' : 'grayscale'}`}>
+                        {badge.icon}
+                      </div>
+                      <div className="text-sm font-medium text-white">{badge.name}</div>
+                      <div className="text-xs text-slate-400 mt-1">{badge.description}</div>
+                      {badge.earned && badge.earnedAt ? (
+                        <div className="text-xs text-amber-400 mt-2">
+                          Earned {new Date(badge.earnedAt).toLocaleDateString()}
+                        </div>
+                      ) : (
+                        <div className="text-xs text-slate-600 mt-2">Locked</div>
+                      )}
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
 
             <div className="border-t border-slate-700 pt-6">
               <h3 className="text-lg font-semibold mb-4">Account Settings</h3>

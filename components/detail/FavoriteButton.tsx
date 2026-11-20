@@ -52,6 +52,13 @@ export function FavoriteButton({ aircraftId, initialIsFavorite }: FavoriteButton
 
         if (response.ok) {
           setIsFavorite(true);
+          const data = await response.json();
+          if (data.badgesGranted?.length) {
+            data.badgesGranted.forEach(
+              (badge: { name: string; icon: string }) =>
+                showToast(`${badge.icon} Badge unlocked: ${badge.name}!`, 'success')
+            );
+          }
           showToast('Added to favorites!', 'success');
         } else {
           const error = await response.json();

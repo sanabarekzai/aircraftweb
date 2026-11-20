@@ -1,6 +1,7 @@
 import { PrismaClient, Category, Era } from '@prisma/client';
 import bcrypt from 'bcryptjs';
 import aircraftData from '../data/seed-aircraft.json';
+import { BADGE_DEFINITIONS } from '../lib/badges';
 
 const prisma = new PrismaClient();
 
@@ -106,6 +107,21 @@ async function main() {
 
     console.log(`Seeded aircraft: ${aircraft.name}`);
   }
+
+  // Seed badge definitions (idempotent upserts)
+  for (const badge of BADGE_DEFINITIONS) {
+    await prisma.badge.upsert({
+      where: { key: badge.key },
+      update: {
+        name: badge.name,
+        description: badge.description,
+        icon: badge.icon,
+        tier: badge.tier,
+      },
+      create: badge,
+    });
+  }
+  console.log(`Seeded ${BADGE_DEFINITIONS.length} badges`);
 
   // Seed an admin account so the dashboard is reachable after a fresh setup
   const adminEmail = (process.env.ADMIN_EMAIL ?? 'admin@aircraftweb.test').toLowerCase();

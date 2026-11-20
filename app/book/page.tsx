@@ -138,6 +138,13 @@ function BookPageContent() {
         return;
       }
 
+      if (data.badgesGranted?.length) {
+        data.badgesGranted.forEach(
+          (badge: { name: string; icon: string }) =>
+            showToast(`${badge.icon} Badge unlocked: ${badge.name}!`, 'success')
+        );
+      }
+
       showToast('Booking created successfully!', 'success');
       router.push('/bookings');
     } catch (error) {

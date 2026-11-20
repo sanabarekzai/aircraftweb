@@ -3,6 +3,7 @@ import { getIronSession } from 'iron-session';
 import { cookies } from 'next/headers';
 import { sessionOptions, SessionData } from '@/lib/session';
 import { prisma } from '@/lib/prisma';
+import { evaluateUserBadges } from '@/lib/badges';
 import { z } from 'zod';
 
 const postSchema = z.object({
@@ -152,10 +153,13 @@ export async function POST(request: Request) {
       ? allRatings.reduce((sum, r) => sum + r.stars, 0) / allRatings.length
       : 0;
 
+    const badgesGranted = await evaluateUserBadges(session.user.id);
+
     return NextResponse.json(
       {
         rating,
         newAverage: Math.round(newAverage * 10) / 10,
+        badgesGranted,
       },
       { status: 200 }
     );

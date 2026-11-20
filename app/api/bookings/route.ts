@@ -12,6 +12,7 @@ import {
   notFoundResponse,
   verifyOwnership,
 } from '@/lib/api-helpers';
+import { evaluateUserBadges } from '@/lib/badges';
 
 const createSchema = z.object({
   aircraftId: z.string().uuid('Invalid aircraft ID'),
@@ -133,8 +134,11 @@ export async function POST(request: Request) {
       },
     });
 
+    const badgesGranted = await evaluateUserBadges(session.user.id);
+
     return successResponse(
       {
+        badgesGranted,
         booking: {
           id: booking.id,
           aircraftId: booking.aircraftId,

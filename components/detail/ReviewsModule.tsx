@@ -77,6 +77,12 @@ export function ReviewsModule({ aircraftId }: ReviewsModuleProps) {
 
       if (response.ok) {
         const data = await response.json();
+        if (data.badgesGranted?.length) {
+          data.badgesGranted.forEach(
+            (badge: { name: string; icon: string }) =>
+              showToast(`${badge.icon} Badge unlocked: ${badge.name}!`, 'success')
+          );
+        }
         setReviews([data.review, ...reviews]);
         setNewContent('');
         showToast('Review posted successfully!', 'success');

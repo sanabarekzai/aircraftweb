@@ -154,6 +154,12 @@ export default function AircraftDetailPage({
       if (response.ok) {
         const data = await response.json();
         setUserRating(data.rating.stars);
+        if (data.badgesGranted?.length) {
+          data.badgesGranted.forEach(
+            (badge: { name: string; icon: string }) =>
+              showToast(`${badge.icon} Badge unlocked: ${badge.name}!`, 'success')
+          );
+        }
         // Update the average rating in the aircraft state
         setAircraft({
           ...aircraft,

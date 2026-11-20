@@ -3,6 +3,7 @@ import { getIronSession } from 'iron-session';
 import { cookies } from 'next/headers';
 import { sessionOptions, SessionData } from '@/lib/session';
 import { prisma } from '@/lib/prisma';
+import { evaluateUserBadges } from '@/lib/badges';
 import { z, ZodError } from 'zod';
 import {
   getSessionOr401,
@@ -126,7 +127,9 @@ export async function POST(request: Request) {
       },
     });
 
-    return successResponse({ review: serializeReview(review) }, 201);
+    const badgesGranted = await evaluateUserBadges(session.user.id);
+
+    return successResponse({ review: serializeReview(review), badgesGranted }, 201);
   } catch (error) {
     if (error instanceof ZodError) {
       return validationError(error.flatten().fieldErrors);

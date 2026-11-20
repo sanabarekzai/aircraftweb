@@ -38,6 +38,7 @@ model User {
   bookings      Booking[]
   reviews       Review[]
   reviewReports ReviewReport[]
+  badges        UserBadge[]
 }
 
 model Aircraft {
@@ -200,4 +201,27 @@ model ReviewReport {
 
   @@unique([reviewId, userId])
   @@index([reviewId])
+}
+
+model Badge {
+  id          String      @id @default(uuid())
+  key         String      @unique
+  name        String
+  description String
+  icon        String
+  tier        String @default("BRONZE") // BRONZE, SILVER, GOLD
+  earnedBy    UserBadge[]
+}
+
+model UserBadge {
+  id        String   @id @default(uuid())
+  userId    String
+  badgeId   String
+  earnedAt  DateTime @default(now())
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  badge     Badge    @relation(fields: [badgeId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, badgeId])
+  @@index([userId])
+  @@index([badgeId])
 }

@@ -100,6 +100,7 @@ export async function PUT(request: Request) {
         id: true,
         username: true,
         email: true,
+        isAdmin: true,
       },
     });
 

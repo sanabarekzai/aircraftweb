@@ -1,4 +1,5 @@
 import { PrismaClient, Category, Era } from '@prisma/client';
+import bcrypt from 'bcryptjs';
 import aircraftData from '../data/seed-aircraft.json';
 
 const prisma = new PrismaClient();
@@ -105,6 +106,22 @@ async function main() {
 
     console.log(`Seeded aircraft: ${aircraft.name}`);
   }
+
+  // Seed an admin account so the dashboard is reachable after a fresh setup
+  const adminEmail = (process.env.ADMIN_EMAIL ?? 'admin@aircraftweb.test').toLowerCase();
+  const adminPassword = process.env.ADMIN_PASSWORD ?? 'Admin123!';
+
+  await prisma.user.upsert({
+    where: { email: adminEmail },
+    update: { isAdmin: true },
+    create: {
+      email: adminEmail,
+      username: 'admin',
+      passwordHash: await bcrypt.hash(adminPassword, 12),
+      isAdmin: true,
+    },
+  });
+  console.log(`Admin user ready: ${adminEmail} (password from ADMIN_PASSWORD or dev default)`);
 
   // Verify count
   const aircraftCount = await prisma.aircraft.count();
